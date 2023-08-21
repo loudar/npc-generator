@@ -32,6 +32,13 @@ export class Skill {
                     }
                 }
                 return true;
+            },
+            costToLearn: function() {
+                let cost = 1;
+                for (let subskill of this.subskills) {
+                    cost += subskill.costToLearn();
+                }
+                return cost;
             }
         };
     }

@@ -6,6 +6,11 @@ export class Bodypart {
             name: name.toLowerCase(),
             type: "Bodypart",
             state: States.healthy,
+            properties: [],
+            addProperty: function(property) {
+                this.properties.push(property);
+                return this;
+            },
             subparts: [],
             addSubpart: function(subpart) {
                 this.subparts.push(subpart);

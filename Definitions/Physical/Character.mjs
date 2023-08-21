@@ -9,6 +9,11 @@ export class Character {
             name: name,
             type: "Character",
             state: States.healthy,
+            properties: [],
+            addProperty: function(property) {
+                this.properties.push(property);
+                return this;
+            },
             skills: [],
             getPossibleProfessions: function(professions) {
                 let possibleProfessions = [];
@@ -27,13 +32,19 @@ export class Character {
                 }
                 return possibleProfessions;
             },
-            learn: function(skill) {
+            learnSkill: function(skill) {
                 for (let mySkill of this.skills) {
                     if (mySkill.name === skill.name) {
                         return this;
                     }
                 }
                 if (skill.canBeLearned(this)) {
+                    for (let subskill of skill.subskills) {
+                        if (!subskill.required) {
+                            continue;
+                        }
+                        this.learnSkill(subskill);
+                    }
                     this.skills.push(skill);
                 } else {
                     console.log(` -> Cannot learn ${skill.name}`);
@@ -50,7 +61,9 @@ export class Character {
                     .addSubpart(Bodypart.new("Ears"))
                     .addSubpart(Bodypart.new("Nose")
                         .addSubpart(Bodyparts.Bones()))
-                    .addSubpart(Bodypart.new("Mouth"))
+                    .addSubpart(Bodypart.new("Mouth")
+                        .addSubpart(Bodypart.new("Tongue"))
+                        .addSubpart(Bodypart.new("Teeth")))
                     .addSubpart(Bodypart.new("Hair"))
                     .addSubpart(Bodypart.new("Neck")
                         .addSubpart(Bodyparts.Bones())))

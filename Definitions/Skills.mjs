@@ -7,6 +7,103 @@ export class Skills {
             .requires(Conditions.Eyes());
     }
 
+    static Logic() {
+        return Skill.new("Logic");
+    }
+
+    static Engineering() {
+        return Skill.new("Engineering")
+            .addSubskill(Skills.Understanding())
+            .addSubskill(Skills.Logic())
+            .addSubskill(Skills.Mathematics());
+    }
+
+    static Hospitality() {
+        return Skill.new("Hospitality");
+    }
+
+    static Finance() {
+        return Skill.new("Finance");
+    }
+
+    static Herbalism() {
+        return Skill.new("Herbalism");
+    }
+
+    static Farming() {
+        return Skill.new("Farming");
+    }
+
+    static Calligraphy() {
+        return Skill.new("Calligraphy")
+            .requires(Conditions.Hands())
+            .addSubskill(Skills.Write());
+    }
+
+    static Listening() {
+        return Skill.new("Listening");
+    }
+
+    static Negotiation() {
+        return Skill.new("Negotiation")
+            .addSubskill(Skills.Logic())
+            .addSubskill(Skills.Charisma());
+    }
+
+    static Creativity() {
+        return Skill.new("Creativity");
+    }
+
+    static Astrology() {
+        return Skill.new("Astrology");
+    }
+
+    static Astronomy() {
+        return Skill.new("Astronomy")
+            .addSubskill(Skills.Sight());
+    }
+
+    static Charisma() {
+        return Skill.new("Charisma");
+    }
+
+    static Patience() {
+        return Skill.new("Patience");
+    }
+
+    static Belief() {
+        return Skill.new("Belief");
+    }
+
+    static Mixing() {
+        return Skill.new("Mixing")
+            .requires(Conditions.Hands());
+    }
+
+    static Taste() {
+        return Skill.new("Taste")
+            .requires(Conditions.Tongue());
+    }
+
+    static Cooking() {
+        return Skill.new("Cooking")
+            .addSubskill(Skills.Sight())
+            .addSubskill(Skills.Taste());
+    }
+
+    static Mathematics() {
+        return Skill.new("Mathematics")
+            .addSubskill(Skills.Understanding())
+            .addSubskill(Skills.Literacy())
+            .addSubskill(Skills.Logic());
+    }
+
+    static Cartography() {
+        return Skill.new("Cartography")
+            .addSubskill(Skills.Mathematics())
+            .addSubskill(Skills.Drawing());
+    }
+
     static Read() {
         return Skill.new("Read")
             .addSubskill(Skills.Sight());

@@ -19,6 +19,11 @@ export class Conditions {
             .addCheck((character) => Checks.bodyPartState(character, "eyes", States.healthy));
     }
 
+    static Tongue() {
+        return Condition.new("Tongue")
+            .addCheck((character) => Checks.bodyPartState(character, "tongue", States.healthy));
+    }
+
     static Healthy() {
         return Condition.new("HealthyObject")
             .addCheck((obj) => obj.state === States.healthy);

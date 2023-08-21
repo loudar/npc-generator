@@ -2,7 +2,6 @@ import {Professions} from "./Definitions/Professions.mjs";
 import {Character} from "./Definitions/Physical/Character.mjs";
 import {Skills} from "./Definitions/Skills.mjs";
 import * as fs from "fs";
-import {Skill} from "./Definitions/Skill.mjs";
 
 console.log("Generating professions...");
 const professionCategories = Professions.generate();
@@ -31,8 +30,9 @@ console.log(`Alex' hands are ${alex.getBodypart("hands").state}`);
 const canLearnResearch2 = Skills.Research().canBeLearned(alex);
 console.log(`Alex can learn Research: ${canLearnResearch2}`);
 
-alex.learn(Skills.Distilling());
-alex.learn(Skills.Brewing());
+alex.learnSkill(Skills.Literacy());
+alex.learnSkill(Skills.Research());
+alex.learnSkill(Skills.Mathematics());
 
 const possibleProfessions = alex.getPossibleProfessions(professions);
 console.log(`Alex' skills: ${alex.skills.map(skill => skill.name).join(", ")}`);
