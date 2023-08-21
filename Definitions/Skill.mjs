@@ -21,17 +21,20 @@ export class Skill {
             canBeLearned: function(character) {
                 for (let requirement of this.requirements) {
                     if (!requirement.check(character)) {
-                        console.log(` -> Failed requirement: ${requirement.name}`);
-                        return false;
+                        return [
+                            `Failed requirement: ${requirement.name}`
+                        ];
                     }
                 }
                 for (let subskill of this.subskills) {
-                    if (subskill.required && !subskill.canBeLearned(character)) {
-                        console.log(` -> Missing subskill: ${subskill.name}`);
-                        return false;
+                    let subSkillErrors = subskill.canBeLearned(character);
+                    if (subskill.required && subSkillErrors.length > 0) {
+                        return [
+                            `Missing subskill: ${subskill.name}`
+                        ].concat(subSkillErrors);
                     }
                 }
-                return true;
+                return [];
             },
             costToLearn: function() {
                 let cost = 1;

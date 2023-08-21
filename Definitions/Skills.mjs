@@ -118,7 +118,7 @@ export class Skills {
     static Literacy() {
         return Skill.new("Literacy")
             .addSubskill(Skills.Read())
-            .addSubskill(Skills.Write().optional());
+            .addSubskill(Skills.Write());
     }
 
     static Brewing() {

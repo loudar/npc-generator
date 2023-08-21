@@ -35,10 +35,11 @@ export class Character {
             learnSkill: function(skill) {
                 for (let mySkill of this.skills) {
                     if (mySkill.name === skill.name) {
-                        return this;
+                        return [];
                     }
                 }
-                if (skill.canBeLearned(this)) {
+                let errors = skill.canBeLearned(this);
+                if (errors.length === 0) {
                     for (let subskill of skill.subskills) {
                         if (!subskill.required) {
                             continue;
@@ -47,9 +48,9 @@ export class Character {
                     }
                     this.skills.push(skill);
                 } else {
-                    console.log(` -> Cannot learn ${skill.name}`);
+                    return errors;
                 }
-                return this;
+                return [];
             },
             getBodypart: function(bodypartName) {
                 return this.body.getBodypart(bodypartName);
