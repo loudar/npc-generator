@@ -20,7 +20,7 @@ export class Skill {
             },
             canBeLearned: function(character) {
                 for (let requirement of this.requirements) {
-                    if (!requirement.check(character)) {
+                    if (!requirement.check(character, this)) {
                         return false;
                     }
                 }

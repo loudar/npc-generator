@@ -8,7 +8,7 @@ console.log("Professions generated.");
 
 const alex = Character.new("Alex");
 // break alex's hands so he can't learn Research
-alex.getBodypart("Hands").setState("Broken");
+alex.getBodypart("Hands").setState("broken");
 
 const canLearnResearch = Skills.Research().canBeLearned(alex);
 const canLearnReading = Skills.Read().canBeLearned(alex);

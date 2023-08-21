@@ -13,13 +13,13 @@ export class Condition {
                 this.checks.push(checkFunction);
                 return this;
             },
-            check: function (character) {
+            check: function (character, object) {
                 let passed = true;
                 for (let subcondition of this.subconditions) {
-                    passed = passed && subcondition.check(character);
+                    passed = passed && subcondition.check(character, object);
                 }
                 for (let check of this.checks) {
-                    passed = passed && check(character);
+                    passed = passed && check(character, object);
                 }
                 return passed;
             }
