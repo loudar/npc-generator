@@ -26,7 +26,7 @@ export class Skill {
                     }
                 }
                 for (let subskill of this.subskills) {
-                    if (!subskill.canBeLearned(character)) {
+                    if (subskill.required && !subskill.canBeLearned(character)) {
                         console.log(` -> Missing subskill: ${subskill.name}`);
                         return false;
                     }

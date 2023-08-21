@@ -4,8 +4,14 @@ import {Skills} from "./Definitions/Skills.mjs";
 import * as fs from "fs";
 
 console.log("Generating professions...");
-const professions = Professions.generate();
-console.log("Professions generated.");
+const professionCategories = Professions.generate();
+const professions = [];
+for (let category of professionCategories) {
+    for (let profession of category.professions) {
+        professions.push(profession);
+    }
+}
+console.log("Professions generated:", professions.length);
 
 const alex = Character.new("Alex");
 // write alex to file
@@ -23,3 +29,10 @@ console.log(`Alex' hands are ${alex.getBodypart("hands").state}`);
 
 const canLearnResearch2 = Skills.Research().canBeLearned(alex);
 console.log(`Alex can learn Research: ${canLearnResearch2}`);
+
+alex.learn(Skills.Read());
+alex.learn(Skills.Literacy());
+
+const possibleProfessions = alex.getPossibleProfessions(professions);
+console.log(`Alex' skills: ${alex.skills.map(skill => skill.name).join(", ")}`);
+console.log(`Alex can be a ${possibleProfessions.map(prof => prof.name).join(", ")}`);

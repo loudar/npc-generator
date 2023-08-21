@@ -14,12 +14,31 @@ export class Character {
                 let possibleProfessions = [];
                 for (let prof of professions) {
                     for (let skill of prof.skills) {
-                        if (this.skills.includes(skill)) {
-                            possibleProfessions.push(prof);
+                        for (let mySkill of this.skills) {
+                            if (mySkill.name === skill.name) { // TODO: Add skill level check
+                                possibleProfessions.push(prof);
+                                break
+                            }
+                        }
+                        if (possibleProfessions.includes(prof)) {
+                            break;
                         }
                     }
                 }
                 return possibleProfessions;
+            },
+            learn: function(skill) {
+                for (let mySkill of this.skills) {
+                    if (mySkill.name === skill.name) {
+                        return this;
+                    }
+                }
+                if (skill.canBeLearned(this)) {
+                    this.skills.push(skill);
+                } else {
+                    console.log(` -> Cannot learn ${skill.name}`);
+                }
+                return this;
             },
             getBodypart: function(bodypartName) {
                 return this.body.getBodypart(bodypartName);
