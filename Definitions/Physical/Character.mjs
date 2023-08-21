@@ -1,11 +1,14 @@
 import {Bodypart} from "./Bodypart.mjs";
 import {Bodyparts} from "./Bodyparts.mjs";
+import {Actions} from "./Actions.mjs";
+import {States} from "./States.js";
 
 export class Character {
     static new(name) {
         return {
             name: name,
             type: "Character",
+            state: States.healthy,
             skills: [],
             getPossibleProfessions: function(professions) {
                 let possibleProfessions = [];
@@ -51,6 +54,7 @@ export class Character {
                     .addSubpart(Bodypart.new("Wrists")
                         .addSubpart(Bodyparts.Bones()))
                     .addSubpart(Bodypart.new("Hands")
+                        .addAction(Actions.BreakObject())
                         .addSubpart(Bodyparts.Bones())))
                 .addSubpart(Bodypart.new("Legs")
                     .addSubpart(Bodypart.new("Hips")

@@ -1,9 +1,11 @@
+import {States} from "./States.js";
+
 export class Bodypart {
     static new(name) {
         return {
             name: name.toLowerCase(),
             type: "Bodypart",
-            state: "healthy",
+            state: States.healthy,
             subparts: [],
             addSubpart: function(subpart) {
                 this.subparts.push(subpart);

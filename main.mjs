@@ -13,7 +13,7 @@ console.log(`Alex can learn Research: ${canLearnResearch1}`);
 
 // break alex's hands so he can't learn Research
 console.log("Breaking Alex's hands...");
-alex.getBodypart("hands").getBodypart("bones").act("break", alex);
+alex.getBodypart("hands").act("break", alex);
 
 const canLearnResearch2 = Skills.Research().canBeLearned(alex);
 console.log(`Alex can learn Research: ${canLearnResearch2}`);

@@ -1,15 +1,9 @@
 import {Bodypart} from "./Bodypart.mjs";
-import {Action} from "./Action.js";
-import {Conditions} from "../Conditions.mjs";
+import {Actions} from "./Actions.mjs";
 
 export class Bodyparts {
     static Bones() {
         return Bodypart.new("Bones")
-            .addAction(Action.new("break")
-                .set((character, object) => {
-                    object.setState("broken");
-                })
-                .addCondition(Conditions.HealthyObject())
-            )
+            .addAction(Actions.BreakObject());
     }
 }
