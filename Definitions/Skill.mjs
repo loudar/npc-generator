@@ -21,11 +21,13 @@ export class Skill {
             canBeLearned: function(character) {
                 for (let requirement of this.requirements) {
                     if (!requirement.check(character, this)) {
+                        console.log(`Failed requirement: ${requirement.name}`);
                         return false;
                     }
                 }
                 for (let subskill of this.subskills) {
                     if (!subskill.canBeLearned(character)) {
+                        console.log(`Missing subskill: ${subskill.name}`);
                         return false;
                     }
                 }

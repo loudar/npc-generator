@@ -16,10 +16,18 @@ export class Condition {
             check: function (character, object) {
                 let passed = true;
                 for (let subcondition of this.subconditions) {
-                    passed = passed && subcondition.check(character, object);
+                    const subcond = subcondition.check(character, object);
+                    if (!subcond) {
+                        console.log(`Failed subcondition: ${subcondition.name}`);
+                    }
+                    passed = passed && subcond;
                 }
                 for (let check of this.checks) {
-                    passed = passed && check(character, object);
+                    const success = check(character, object);
+                    if (!success) {
+                        console.log(`Failed check: ${this.name}`);
+                    }
+                    passed = passed && success;
                 }
                 return passed;
             }

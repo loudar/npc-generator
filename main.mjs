@@ -7,11 +7,13 @@ const professions = Professions.generate();
 console.log("Professions generated.");
 
 const alex = Character.new("Alex");
+
+const canLearnResearch1 = Skills.Research().canBeLearned(alex);
+console.log(`Alex can learn Research: ${canLearnResearch1}`);
+
 // break alex's hands so he can't learn Research
-alex.getBodypart("Hands").setState("broken");
+console.log("Breaking Alex's hands...");
+alex.getBodypart("hands").getBodypart("bones").act("break", alex);
 
-const canLearnResearch = Skills.Research().canBeLearned(alex);
-const canLearnReading = Skills.Read().canBeLearned(alex);
-
-console.log(`Alex can learn Research: ${canLearnResearch}`);
-console.log(`Alex can learn Reading: ${canLearnReading}`);
+const canLearnResearch2 = Skills.Research().canBeLearned(alex);
+console.log(`Alex can learn Research: ${canLearnResearch2}`);

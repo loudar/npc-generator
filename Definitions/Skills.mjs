@@ -13,7 +13,7 @@ export class Skills {
 
     static Write() {
         return Skill.new("Write")
-            .requires(Conditions.Hand())
+            .requires(Conditions.Hands())
             .addSubskill(Skills.Sight())
     }
 
@@ -35,6 +35,6 @@ export class Skills {
 
     static Drawing() {
         return Skill.new("Drawing")
-            .requires(Conditions.Hand());
+            .requires(Conditions.Hands());
     }
 }

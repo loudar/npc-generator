@@ -1,20 +1,20 @@
 import {Condition} from "./Condition.mjs";
 
 export class Conditions {
-    static Arm() {
-        return Condition.new("Arm")
-            .addCheck((character, obj) => character.body.has("Arm"));
+    static Arms() {
+        return Condition.new("Arms")
+            .addCheck((character, obj) => character.body.has("arms"));
     }
 
-    static Hand() {
-        return Condition.new("Hand")
-            .addSubcondition(Conditions.Arm())
-            .addCheck((character, obj) => character.body.has("Hand"));
+    static Hands() {
+        return Condition.new("Hands")
+            .addSubcondition(Conditions.Arms())
+            .addCheck((character, obj) => character.body.has("hands"));
     }
 
-    static Eye() {
-        return Condition.new("Eye")
-            .addCheck((character, obj) => character.body.has("Eye"));
+    static Eyes() {
+        return Condition.new("Eyes")
+            .addCheck((character, obj) => character.body.has("eyes"));
     }
 
     static HealthyObject() {

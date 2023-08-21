@@ -50,7 +50,7 @@ export class Bodypart {
             },
             has: function(bodypartName) {
                 for (let subpart of this.subparts) {
-                    if (subpart.name === bodypartName.toLowerCase() && subpart.state === "healthy") {
+                    if (subpart.name === bodypartName.toLowerCase()) {
                         return true;
                     } else if (subpart.has(bodypartName)) {
                         return true;
