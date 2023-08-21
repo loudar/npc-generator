@@ -7,6 +7,6 @@ export class Actions {
             .set((character, object) => {
                 object.setState("broken");
             })
-            .addCondition(Conditions.HealthyObject())
+            .addCondition(Conditions.Healthy())
     }
 }

@@ -8,9 +8,9 @@ export class Action {
                 this.conditions.push(condition);
                 return this;
             },
-            check: function(character, object) {
+            check: function(object) {
                 for (let condition of this.conditions) {
-                    if (!condition.check(character, object)) {
+                    if (!condition.check(object)) {
                         return false;
                     }
                 }
@@ -21,8 +21,11 @@ export class Action {
                 this.action = func;
                 return this;
             },
-            perform: function(character, object) {
-                return this.action(character, object);
+            perform: function(object) {
+                if (!this.check(object)) {
+                    return null;
+                }
+                return this.action(object);
             }
         };
     }

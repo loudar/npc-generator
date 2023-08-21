@@ -13,17 +13,17 @@ export class Condition {
                 this.checks.push(checkFunction);
                 return this;
             },
-            check: function (character, object) {
+            check: function (character) {
                 let passed = true;
                 for (let subcondition of this.subconditions) {
-                    const subcond = subcondition.check(character, object);
+                    const subcond = subcondition.check(character);
                     if (!subcond) {
                         console.log(`Failed subcondition: ${subcondition.name}`);
                     }
                     passed = passed && subcond;
                 }
                 for (let check of this.checks) {
-                    const success = check(character, object);
+                    const success = check(character);
                     if (!success) {
                         console.log(`Failed check: ${this.name}`);
                     }

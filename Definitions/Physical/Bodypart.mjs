@@ -16,19 +16,19 @@ export class Bodypart {
                 this.actions.push(action);
                 return this;
             },
-            getAvailableActions: function(character) {
+            getAvailableActions: function() {
                 let actions = [];
                 for (let action of this.actions) {
-                    if (action.check(character, this)) {
+                    if (action.check(this)) {
                         actions.push(action);
                     }
                 }
                 return actions;
             },
-            act: function(actionName, character) {
+            act: function(actionName) {
                 for (let action of this.actions) {
-                    if (action.name === actionName.toLowerCase() && action.check(character, this)) {
-                        return action.perform(character, this);
+                    if (action.name === actionName.toLowerCase()) {
+                        return action.perform(this);
                     }
                 }
                 return null;

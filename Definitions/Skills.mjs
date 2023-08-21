@@ -3,7 +3,8 @@ import {Conditions} from "./Conditions.mjs";
 
 export class Skills {
     static Sight() {
-        return Skill.new("Sight");
+        return Skill.new("Sight")
+            .requires(Conditions.Eyes());
     }
 
     static Read() {
