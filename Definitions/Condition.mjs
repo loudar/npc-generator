@@ -18,14 +18,14 @@ export class Condition {
                 for (let subcondition of this.subconditions) {
                     const subcond = subcondition.check(character);
                     if (!subcond) {
-                        console.log(`Failed subcondition: ${subcondition.name}`);
+                        console.log(` -> Failed subcondition: ${subcondition.name}`);
                     }
                     passed = passed && subcond;
                 }
                 for (let check of this.checks) {
                     const success = check(character);
                     if (!success) {
-                        console.log(`Failed check: ${this.name}`);
+                        console.log(` -> Failed check: ${this.name}`);
                     }
                     passed = passed && success;
                 }

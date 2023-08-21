@@ -14,15 +14,12 @@ fs.writeFileSync("./alex.json", JSON.stringify(alex, null, 4));
 const canLearnResearch1 = Skills.Research().canBeLearned(alex);
 console.log(`Alex can learn Research: ${canLearnResearch1}`);
 
-console.log("Here's what ya can do to Alex's hands...");
-alex.getBodypart("hands").getAvailableActions().forEach(action => console.log(action.name));
-console.log("");
-// break alex's hands so he can't learn Research
-console.log("Breaking Alex's hands...");
+alex.getBodypart("hands").getAvailableActions().forEach(action => {
+    console.log(`Alex' hands can ${action.name}`);
+});
+
 alex.getBodypart("hands").act("break");
-console.log("");
+console.log(`Alex' hands are ${alex.getBodypart("hands").state}`);
+
 const canLearnResearch2 = Skills.Research().canBeLearned(alex);
 console.log(`Alex can learn Research: ${canLearnResearch2}`);
-console.log("");
-console.log("Here's what ya can do now to Alex's hands...");
-alex.getBodypart("hands").getAvailableActions().forEach(action => console.log(action.name));
