@@ -24,6 +24,16 @@ export class Skills {
             .addSubskill(Skills.Write().optional());
     }
 
+    static Brewing() {
+        return Skill.new("Brewing")
+            .requires(Conditions.Hands());
+    }
+
+    static Distilling() {
+        return Skill.new("Distilling")
+            .requires(Conditions.Hands());
+    }
+
     static Understanding() {
         return Skill.new("Understanding");
     }

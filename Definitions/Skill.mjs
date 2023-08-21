@@ -1,7 +1,7 @@
 export class Skill {
     static new(name) {
         return {
-            name: name,
+            name: name.toLowerCase(),
             type: "Skill",
             subskills: [],
             requirements: [],

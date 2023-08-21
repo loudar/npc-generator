@@ -138,11 +138,11 @@ export class ProfessionCategories {
             )
             .addProfession(
                 Profession.new("Brewer")
-                    .addSkill(Skill.new("Brewing"))
+                    .addSkill(Skills.Brewing())
             )
             .addProfession(
                 Profession.new("Vintner")
-                    .addSkill(Skill.new("Brewing"))
+                    .addSkill(Skills.Brewing())
             )
             .addProfession(
                 Profession.new("Gardener")
@@ -176,13 +176,13 @@ export class ProfessionCategories {
             )
             .addProfession(
                 Profession.new("Distiller")
-                    .addSkill(Skill.new("Brewing"))
-                    .addSkill(Skill.new("Distilling"))
+                    .addSkill(Skills.Brewing())
+                    .addSkill(Skills.Distilling())
             )
             .addProfession(
                 Profession.new("Meadmaker")
-                    .addSkill(Skill.new("Brewing"))
-                    .addSkill(Skill.new("Distilling"))
+                    .addSkill(Skills.Brewing())
+                    .addSkill(Skills.Distilling())
             )
     }
 

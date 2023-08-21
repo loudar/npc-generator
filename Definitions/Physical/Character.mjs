@@ -13,16 +13,16 @@ export class Character {
             getPossibleProfessions: function(professions) {
                 let possibleProfessions = [];
                 for (let prof of professions) {
+                    let canBe = true;
                     for (let skill of prof.skills) {
-                        for (let mySkill of this.skills) {
-                            if (mySkill.name === skill.name) { // TODO: Add skill level check
-                                possibleProfessions.push(prof);
-                                break
-                            }
-                        }
-                        if (possibleProfessions.includes(prof)) {
+                        let existingSkill = this.skills.find(mySkill => mySkill.name === skill.name);
+                        if (!existingSkill && skill.required) {
+                            canBe = false;
                             break;
                         }
+                    }
+                    if (canBe) {
+                        possibleProfessions.push(prof);
                     }
                 }
                 return possibleProfessions;
