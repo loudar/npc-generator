@@ -2,6 +2,7 @@ import {Professions} from "./Definitions/Professions.mjs";
 import {Character} from "./Definitions/Physical/Character.mjs";
 import {Skills} from "./Definitions/Skills.mjs";
 import * as fs from "fs";
+import {Actions} from "./Definitions/Physical/Actions.mjs";
 
 console.log("Generating professions...");
 const professionCategories = Professions.generate();
@@ -13,11 +14,20 @@ for (let category of professionCategories) {
 }
 console.log("Professions generated:", professions.length);
 
+const language = "en";
+
 const char1 = Character.new("David");
 const char2 = Character.new("Alex");
 
-//const result = char2.getBodypart("hands").act("break", `${char1.name} is {action}ing ${char2.name}' {object}!`);
-//console.log(result.sentence);
+const bodypart = char2.getBodypart("nose");
+const result = bodypart.act("break");
+if (result.action) {
+    console.log(`${char1.name} ${result.action.verb[language]}s ${char2.name}' ${bodypart.name}.`);
+} else if (result.error) {
+    console.log(result.error);
+} else {
+    console.log(`Nothing happens.`);
+}
 
 console.log(`Alex' hands are ${char2.getBodypart("hands").state}`);
 

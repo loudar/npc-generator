@@ -74,6 +74,7 @@ export class Character {
                     .addSubpart(Bodypart.new("Eyes"))
                     .addSubpart(Bodypart.new("Ears"))
                     .addSubpart(Bodypart.new("Nose")
+                        .addAction(Actions.BreakObject())
                         .addSubpart(Bodyparts.Bones()))
                     .addSubpart(Bodypart.new("Mouth")
                         .addSubpart(Bodypart.new("Tongue"))

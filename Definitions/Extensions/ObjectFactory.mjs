@@ -15,15 +15,14 @@ export class ObjectFactory {
                 }
                 return actions;
             },
-            act: function (actionName, sentence) {
+            act: function (actionName, parameters = {}) {
                 for (let action of this.actions) {
                     if (action.name === actionName.toLowerCase()) {
-                        return action.perform(this, sentence);
+                        return action.perform(this, parameters);
                     }
                 }
                 return {
-                    actionResult: null,
-                    sentence: "Nothing happens."
+                    error: `Action not found on ${this.name}: ${actionName}`,
                 };
             },
         };

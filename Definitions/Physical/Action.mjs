@@ -1,8 +1,8 @@
 export class Action {
-    static new(name, verb = name) {
+    static new(name, verbs = { en: name }) {
         return {
             name: name.toLowerCase(),
-            verb: verb.toLowerCase(),
+            verb: verbs,
             type: "Action",
             conditions: [],
             addCondition: function(condition) {
@@ -17,23 +17,22 @@ export class Action {
                 }
                 return true;
             },
-            action: (character, object) => {},
+            action: (object, parameters) => {},
             set: function(func) {
                 this.action = func;
                 return this;
             },
-            perform: function(object, sentence = "{object} {action}s") {
+            perform: function(object, parameters = {}) {
                 if (!this.check(object)) {
                     return {
-                        actionResult: null,
-                        sentence: "Nothing happens."
+                        error: `Failed precondition in action: ${this.name}`,
                     };
                 }
-                const result = this.action(object);
+                const result = this.action(object, parameters);
                 return {
                     actionResult: result,
-                    sentence: sentence.replace("{action}", this.verb).replace("{object}", object.name)
-                };
+                    action: this,
+                }
             }
         };
     }
