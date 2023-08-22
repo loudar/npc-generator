@@ -16,26 +16,35 @@ console.log("Professions generated:", professions.length);
 const char1 = Character.new("David");
 const char2 = Character.new("Alex");
 
-const result = char2.getBodypart("hands").act("break", `${char1.name} is {action}ing ${char2.name}' {object}!`);
-console.log(result.sentence);
+//const result = char2.getBodypart("hands").act("break", `${char1.name} is {action}ing ${char2.name}' {object}!`);
+//console.log(result.sentence);
 
 console.log(`Alex' hands are ${char2.getBodypart("hands").state}`);
 
-let errors;
-errors = char2.learnSkill(Skills.Literacy());
-if (errors.length > 0) {
+let learnRes, totalCost = 0;
+learnRes = char2.learnSkill(Skills.Literacy());
+if (learnRes.errors) {
     console.log("Alex can't learn Literacy:");
-    errors.forEach(error => console.log(" -> " + error));
+    learnRes.errors.forEach(error => console.log(" -> " + error));
+} else {
+    totalCost += learnRes.cost;
+    console.log(`Alex learns Literacy for ${learnRes.cost} points.`);
 }
-errors = char2.learnSkill(Skills.Research());
-if (errors.length > 0) {
+learnRes = char2.learnSkill(Skills.Research());
+if (learnRes.errors) {
     console.log("Alex can't learn Research:");
-    errors.forEach(error => console.log(" -> " + error));
+    learnRes.errors.forEach(error => console.log(" -> " + error));
+} else {
+    totalCost += learnRes.cost;
+    console.log(`Alex learns Research for ${learnRes.cost} points.`);
 }
-errors = char2.learnSkill(Skills.Mathematics());
-if (errors.length > 0) {
+learnRes = char2.learnSkill(Skills.Mathematics());
+if (learnRes.errors) {
     console.log("Alex can't learn Mathematics:");
-    errors.forEach(error => console.log(" -> " + error));
+    learnRes.errors.forEach(error => console.log(" -> " + error));
+} else {
+    totalCost += learnRes.cost;
+    console.log(`Alex learns Mathematics for ${learnRes.cost} points.`);
 }
 
 const possibleProfessions = char2.getPossibleProfessions(professions);

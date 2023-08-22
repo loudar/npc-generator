@@ -1,11 +1,12 @@
 export class Skill {
-    static new(name) {
+    static new(name, cost = 1) {
         return {
             name: name.toLowerCase(),
             type: "Skill",
             subskills: [],
             requirements: [],
             required: true,
+            cost: cost,
             addSubskill: function(subskill) {
                 this.subskills.push(subskill);
                 return this;

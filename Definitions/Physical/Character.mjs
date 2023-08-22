@@ -33,10 +33,16 @@ export class Character {
                 }
                 return possibleProfessions;
             },
+            /**
+             * Returns errors if the skill can't be learned, otherwise returns the cost to learn the skill and required subskills.
+             * @param skill
+             * @returns {{errors: ([string]|string[]|[])}|{cost: number}}
+             */
             learnSkill: function(skill) {
+                let cost = 0;
                 for (let mySkill of this.skills) {
                     if (mySkill.name === skill.name) {
-                        return [];
+                        return { cost };
                     }
                 }
                 let errors = skill.canBeLearned(this);
@@ -45,13 +51,19 @@ export class Character {
                         if (!subskill.required) {
                             continue;
                         }
-                        this.learnSkill(subskill);
+                        const subLearn = this.learnSkill(subskill);
+                        if (subLearn.errors) {
+                            errors.push(...subLearn.errors);
+                        } else {
+                            cost += subLearn.cost;
+                        }
                     }
                     this.skills.push(skill);
+                    cost += skill.cost;
                 } else {
-                    return errors;
+                    return { errors };
                 }
-                return [];
+                return { cost };
             },
             getBodypart: function(bodypartName) {
                 return this.body.getBodypart(bodypartName);
