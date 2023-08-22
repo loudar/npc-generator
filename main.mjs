@@ -21,7 +21,8 @@ alex.getBodypart("hands").getAvailableActions().forEach(action => {
     console.log(`Alex' hands can ${action.name}`);
 });
 
-alex.getBodypart("hands").act("break");
+const result = alex.getBodypart("hands").act("break", `We're {action}ing ${alex.name} {object}!`);
+console.log(result.sentence);
 console.log(`Alex' hands are ${alex.getBodypart("hands").state}`);
 
 let errors;

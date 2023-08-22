@@ -1,7 +1,8 @@
 export class Action {
-    static new(name) {
+    static new(name, verb = name) {
         return {
             name: name.toLowerCase(),
+            verb: verb.toLowerCase(),
             type: "Action",
             conditions: [],
             addCondition: function(condition) {
@@ -21,11 +22,18 @@ export class Action {
                 this.action = func;
                 return this;
             },
-            perform: function(object) {
+            perform: function(object, sentence = "{object} {action}s") {
                 if (!this.check(object)) {
-                    return null;
+                    return {
+                        actionResult: null,
+                        sentence: "Nothing happens."
+                    };
                 }
-                return this.action(object);
+                const result = this.action(object);
+                return {
+                    actionResult: result,
+                    sentence: sentence.replace("{action}", this.verb).replace("{object}", object.name)
+                };
             }
         };
     }

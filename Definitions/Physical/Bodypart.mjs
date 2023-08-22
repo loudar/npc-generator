@@ -1,8 +1,9 @@
 import {States} from "./States.js";
+import {ObjectFactory} from "../Extensions/ObjectFactory.mjs";
 
 export class Bodypart {
     static new(name) {
-        return {
+        let baseObject = {
             name: name.toLowerCase(),
             type: "Bodypart",
             state: States.healthy,
@@ -15,28 +16,6 @@ export class Bodypart {
             addSubpart: function(subpart) {
                 this.subparts.push(subpart);
                 return this;
-            },
-            actions: [],
-            addAction: function(action) {
-                this.actions.push(action);
-                return this;
-            },
-            getAvailableActions: function() {
-                let actions = [];
-                for (let action of this.actions) {
-                    if (action.check(this)) {
-                        actions.push(action);
-                    }
-                }
-                return actions;
-            },
-            act: function(actionName) {
-                for (let action of this.actions) {
-                    if (action.name === actionName.toLowerCase()) {
-                        return action.perform(this);
-                    }
-                }
-                return null;
             },
             getBodypart: function(bodypartName) {
                 if (this.name === bodypartName.toLowerCase()) {
@@ -66,5 +45,6 @@ export class Bodypart {
                 return false;
             }
         };
+        return ObjectFactory.addActions(baseObject);
     }
 }

@@ -2,10 +2,11 @@ import {Bodypart} from "./Bodypart.mjs";
 import {Bodyparts} from "./Bodyparts.mjs";
 import {Actions} from "./Actions.mjs";
 import {States} from "./States.js";
+import {ObjectFactory} from "../Extensions/ObjectFactory.mjs";
 
 export class Character {
     static new(name) {
-        return {
+        let baseObject = {
             name: name,
             type: "Character",
             state: States.healthy,
@@ -109,5 +110,6 @@ export class Character {
                     .addSubpart(Bodypart.new("Bladder"))
                     .addSubpart(Bodypart.new("Reproductive Organs")))
         };
+        return ObjectFactory.addActions(baseObject);
     }
 }
