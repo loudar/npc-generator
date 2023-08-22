@@ -13,35 +13,31 @@ for (let category of professionCategories) {
 }
 console.log("Professions generated:", professions.length);
 
-const alex = Character.new("Alex");
-// write alex to file
-fs.writeFileSync("./alex.json", JSON.stringify(alex, null, 4));
+const char1 = Character.new("David");
+const char2 = Character.new("Alex");
 
-alex.getBodypart("hands").getAvailableActions().forEach(action => {
-    console.log(`Alex' hands can ${action.name}`);
-});
-
-const result = alex.getBodypart("hands").act("break", `We're {action}ing ${alex.name} {object}!`);
+const result = char2.getBodypart("hands").act("break", `${char1.name} is {action}ing ${char2.name}' {object}!`);
 console.log(result.sentence);
-console.log(`Alex' hands are ${alex.getBodypart("hands").state}`);
+
+console.log(`Alex' hands are ${char2.getBodypart("hands").state}`);
 
 let errors;
-errors = alex.learnSkill(Skills.Literacy());
+errors = char2.learnSkill(Skills.Literacy());
 if (errors.length > 0) {
     console.log("Alex can't learn Literacy:");
     errors.forEach(error => console.log(" -> " + error));
 }
-errors = alex.learnSkill(Skills.Research());
+errors = char2.learnSkill(Skills.Research());
 if (errors.length > 0) {
     console.log("Alex can't learn Research:");
     errors.forEach(error => console.log(" -> " + error));
 }
-errors = alex.learnSkill(Skills.Mathematics());
+errors = char2.learnSkill(Skills.Mathematics());
 if (errors.length > 0) {
     console.log("Alex can't learn Mathematics:");
     errors.forEach(error => console.log(" -> " + error));
 }
 
-const possibleProfessions = alex.getPossibleProfessions(professions);
-console.log(`Alex' skills: ${alex.skills.map(skill => skill.name).join(", ")}`);
+const possibleProfessions = char2.getPossibleProfessions(professions);
+console.log(`Alex' skills: ${char2.skills.map(skill => skill.name).join(", ")}`);
 console.log(`Alex can be a ${possibleProfessions.map(prof => prof.name).join(", ")}`);
