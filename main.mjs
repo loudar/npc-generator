@@ -57,6 +57,8 @@ if (learnRes.errors) {
     console.log(`Alex learns Mathematics for ${learnRes.cost} points.`);
 }
 
+console.log(`Total cost: ${totalCost} points`);
+
 const possibleProfessions = char2.getPossibleProfessions(professions);
 console.log(`Alex' skills: ${char2.skills.map(skill => skill.name).join(", ")}`);
 console.log(`Alex can be a ${possibleProfessions.map(prof => prof.name).join(", ")}`);
