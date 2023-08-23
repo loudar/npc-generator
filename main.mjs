@@ -23,14 +23,14 @@ const char2 = Character.new(NameGenerator.generateName());
 const bodypart = char2.getBodypart("nose");
 const result = bodypart.act("break");
 if (result.action) {
-    console.log(`${char1.name} ${result.action.verb[language]}s ${char2.name}' ${bodypart.name}.`);
+    console.log(`${char1.name} ${result.action.verb[language]}s ${char2.name}${char2.name.endsWith('s') || char2.name.endsWith('z') ? "'" : "'s"} ${bodypart.name}.`);
 } else if (result.error) {
     console.log(result.error);
 } else {
     console.log(`Nothing happens.`);
 }
 
-console.log(`${char2.name}' hands are ${char2.getBodypart("hands").state}`);
+console.log(`${char2.name}${char2.name.endsWith('s') || char2.name.endsWith('z') ? "'" : "'s"} hands are ${char2.getBodypart("hands").state}`);
 
 let learnRes, totalCost = 0;
 learnRes = char2.learnSkill(Skills.Literacy());
@@ -61,5 +61,5 @@ if (learnRes.errors) {
 console.log(`Total cost: ${totalCost} points`);
 
 const possibleProfessions = char2.getPossibleProfessions(professions);
-console.log(`${char2.name}' skills: ${char2.skills.map(skill => skill.name).join(", ")}`);
+console.log(`${char2.name}${char2.name.endsWith('s') || char2.name.endsWith('z') ? "'" : "'s"} skills: ${char2.skills.map(skill => skill.name).join(", ")}`);
 console.log(`${char2.name} can be a ${possibleProfessions.map(prof => prof.name).join(", ")}`);
