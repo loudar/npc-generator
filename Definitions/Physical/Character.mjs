@@ -1,7 +1,7 @@
 import {Bodypart} from "./Bodypart.mjs";
 import {Bodyparts} from "./Bodyparts.mjs";
 import {Actions} from "./Actions.mjs";
-import {States} from "./States.js";
+import {States} from "./States.mjs";
 import {ObjectFactory} from "../Extensions/ObjectFactory.mjs";
 
 export class Character {

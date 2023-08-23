@@ -1,6 +1,6 @@
 import {Condition} from "./Condition.mjs";
-import {States} from "./Physical/States.js";
-import {Checks} from "./Checks.js";
+import {States} from "./Physical/States.mjs";
+import {Checks} from "./Checks.mjs";
 
 export class Conditions {
     static Arms() {

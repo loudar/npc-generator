@@ -1,4 +1,4 @@
-import {States} from "./States.js";
+import {States} from "./States.mjs";
 import {ObjectFactory} from "../Extensions/ObjectFactory.mjs";
 
 export class Bodypart {
