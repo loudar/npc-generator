@@ -3,6 +3,7 @@ import {Bodyparts} from "./Bodyparts.mjs";
 import {Actions} from "./Actions.mjs";
 import {States} from "./States.mjs";
 import {ObjectFactory} from "../Extensions/ObjectFactory.mjs";
+import {Professions} from "../Professions.mjs";
 
 export class Character {
     static new(name) {
@@ -16,6 +17,7 @@ export class Character {
                 return this;
             },
             skills: [],
+            profession: 'Nitwit',
             getPossibleProfessions: function(professions) {
                 let possibleProfessions = [];
                 for (let prof of professions) {
@@ -32,6 +34,18 @@ export class Character {
                     }
                 }
                 return possibleProfessions;
+            },
+            setProfession: function(profession) {
+                const possibleProfessions = this.getPossibleProfessions(Professions.getAll()).map(prof => prof.name);
+                if (!possibleProfessions.includes(profession.name)) {
+                    console.log({
+                        possibleProfessions,
+                        skills: this.skills
+                    });
+                    throw new Error(`${this.name} can't be a ${profession.name}`);
+                }
+                this.profession = profession.name;
+                return this;
             },
             /**
              * Returns errors if the skill can't be learned, otherwise returns the cost to learn the skill and required subskills.

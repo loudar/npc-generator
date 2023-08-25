@@ -4,6 +4,7 @@ import {Skills} from "./Definitions/Skills.mjs";
 import * as fs from "fs";
 import {Actions} from "./Definitions/Physical/Actions.mjs";
 import {NameGenerator} from "./Generators/NameGenerator.mjs";
+import {PopulationGenerator} from "./Generators/PopulationGenerator.mjs";
 
 console.log("Generating professions...");
 const professionCategories = Professions.generate();
@@ -17,9 +18,21 @@ console.log("Professions generated:", professions.length);
 
 const language = "en";
 
-const char1 = Character.new(NameGenerator.generateName());
-const char2 = Character.new(NameGenerator.generateName());
+console.log("Generating population...");
+const population = PopulationGenerator.generatePopulation();
+console.log("Population generated:", population.people.length);
 
+const professionCounts = population.people.reduce((counts, person) => {
+    if (!counts[person.profession]) {
+        counts[person.profession] = 0;
+    }
+    counts[person.profession]++;
+    return counts;
+}, {});
+
+console.log("Profession counts:", professionCounts);
+
+/*
 const bodypart = char2.getBodypart("nose");
 const result = bodypart.act("break");
 if (result.action) {
@@ -63,3 +76,4 @@ console.log(`Total cost: ${totalCost} points`);
 const possibleProfessions = char2.getPossibleProfessions(professions);
 console.log(`${char2.name}${char2.name.endsWith('s') || char2.name.endsWith('z') ? "'" : "'s"} skills: ${char2.skills.map(skill => skill.name).join(", ")}`);
 console.log(`${char2.name} can be a ${possibleProfessions.map(prof => prof.name).join(", ")}`);
+*/

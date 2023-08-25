@@ -10,4 +10,15 @@ export class Professions {
             ProfessionCategories.FOOD(),
         ]
     }
+
+    static getAll() {
+        const professionCategories = Professions.generate();
+        const professions = [];
+        for (let category of professionCategories) {
+            for (let profession of category.professions) {
+                professions.push(profession);
+            }
+        }
+        return professions;
+    }
 }
