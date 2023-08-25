@@ -1,9 +1,4 @@
 import {Professions} from "./Definitions/Professions.mjs";
-import {Character} from "./Definitions/Physical/Character.mjs";
-import {Skills} from "./Definitions/Skills.mjs";
-import * as fs from "fs";
-import {Actions} from "./Definitions/Physical/Actions.mjs";
-import {NameGenerator} from "./Generators/NameGenerator.mjs";
 import {PopulationGenerator} from "./Generators/PopulationGenerator.mjs";
 
 console.log("Generating professions...");

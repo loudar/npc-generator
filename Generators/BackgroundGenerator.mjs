@@ -1,6 +1,6 @@
 import {Population} from "../Info/Population.mjs";
 import {NumberGenerator} from "./NumberGenerator.mjs";
-import {Skills} from "../Definitions/Skills.mjs";
+import {Skills} from "../Definitions/Skills/Skills.mjs";
 import {Professions} from "../Definitions/Professions.mjs";
 
 /**

@@ -14,6 +14,11 @@ export class Conditions {
             .addCheck((character) => Checks.bodyPartState(character, "hands", States.healthy));
     }
 
+    static Legs() {
+        return Condition.new("Legs")
+            .addCheck((character) => Checks.bodyPartState(character, "legs", States.healthy));
+    }
+
     static Eyes() {
         return Condition.new("Eyes")
             .addCheck((character) => Checks.bodyPartState(character, "eyes", States.healthy));
