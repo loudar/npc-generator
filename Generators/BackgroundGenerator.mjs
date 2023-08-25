@@ -1,7 +1,7 @@
 import {Population} from "../Info/Population.mjs";
 import {NumberGenerator} from "./NumberGenerator.mjs";
-import {Skills} from "../Definitions/Skills/Skills.mjs";
 import {Professions} from "../Definitions/Professions.mjs";
+import {MentalSkills} from "../Definitions/Skills/MentalSkills.mjs";
 
 /**
  * Generates a background for a character.
@@ -21,9 +21,9 @@ export class BackgroundGenerator {
     }
 
     static generateSkills(character) {
-        BackgroundGenerator.learnSkillIfInRate(character, Skills.Literacy(), Population.literacyRate);
-        BackgroundGenerator.learnSkillIfInRate(character, Skills.Mathematics(), Population.mathematicsRate);
-        BackgroundGenerator.learnSkillIfInRate(character, Skills.Research(), Population.researchRate);
+        BackgroundGenerator.learnSkillIfInRate(character, MentalSkills.Literacy(), Population.literacyRate);
+        BackgroundGenerator.learnSkillIfInRate(character, MentalSkills.Mathematics(), Population.mathematicsRate);
+        BackgroundGenerator.learnSkillIfInRate(character, MentalSkills.Research(), Population.researchRate);
     }
 
     static learnSkillIfInRate(character, skill, rate) {
