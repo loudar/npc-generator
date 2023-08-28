@@ -3,6 +3,7 @@ export class NumberGenerator {
      * Generates a random float between min and max.
      * @param min
      * @param max
+     * @param toInt
      * @returns {number}
      */
     static random(min, max, toInt = false) {

@@ -2,11 +2,11 @@ import {NumberGenerator} from "./NumberGenerator.mjs";
 import {Numbers} from "../Helpers/Numbers.mjs";
 
 export class WordGenerator {
-    static generateWord(characterDistribution) {
-        const wordLength = this.generateWordLength();
+    static generateWord(characterDistribution, languageComplexity) {
+        const wordLength = this.generateWordLength(languageComplexity);
         const characters = this.generateCharactersByDistribution(characterDistribution, wordLength);
         let word = this.buildWordFromArray(characters);
-        word = this.ensureVowel(word);
+        word = this.ensureVowels(word, characterDistribution);
         return word.charAt(0).toUpperCase() + word.slice(1);
     }
 
@@ -25,13 +25,25 @@ export class WordGenerator {
         return this.vowels(true).includes(character.toLowerCase());
     }
 
-    static ensureVowel(word) {
-        if (this.isVowel(word.charAt(0))) {
-            return word;
+    static ensureVowels(word, distribution) {
+        const regex = /([^aeiou]{4,})/gi; // Matches sequences of 4 or more consonants
+        let match = regex.exec(word);
+
+        while (match !== null) {
+            const [fullMatch] = match;
+            const positionToInsert = Math.floor(fullMatch.length / 2); // Find the middle of the matched consonants
+            const newVowel = this.generateVowels(distribution, 1, 1); // Generate a new vowel
+
+            // Replace the matched sequence of consonants by inserting the new vowel in the middle
+            word = word.replace(
+                fullMatch,
+                fullMatch.substring(0, positionToInsert) + newVowel + fullMatch.substring(positionToInsert)
+            );
+
+            match = regex.exec(word);
         }
-        const vowel = this.generateVowels(1, 1);
-        const position = NumberGenerator.random(0, word.length - 1, true);
-        return word.slice(0, position) + vowel + word.slice(position);
+
+        return word;
     }
 
     static generateCharactersByDistribution(distribution, count) {
@@ -54,24 +66,23 @@ export class WordGenerator {
         return !asArray ? consonants : consonants.split("");
     }
 
-    static generateWordLength() {
-        return NumberGenerator.randomWithBias(2, 9, 4, 0.6, true);
+    static generateWordLength(complexity = 0.5) {
+        return NumberGenerator.randomWithBias(2 + complexity, 8 + (complexity * 5), 4 + (complexity * 2), 0.9 - (complexity * 0.5), true);
     }
 
-    static generateVowels(minCount = 1, maxCount = 3) {
-        return this.generateCharacters(WordGenerator.vowels(), minCount, maxCount);
+    static generateVowels(distribution, minCount = 1, maxCount = 3) {
+        return this.generateCharacters(distribution, WordGenerator.vowels(), minCount, maxCount);
     }
 
-    static generateConsonants(minCount = 1, maxCount = 3) {
-        return this.generateCharacters(WordGenerator.consonants(), minCount, maxCount);
+    static generateConsonants(distribution, minCount = 1, maxCount = 3) {
+        return this.generateCharacters(distribution, WordGenerator.consonants(), minCount, maxCount);
     }
 
-    static generateCharacters(characters, minCount, maxCount) {
-        const vowelCount = NumberGenerator.random(minCount, maxCount, true);
-        let word = "";
-        for (let i = 0; i < vowelCount; i++) {
-            word += characters[NumberGenerator.random(0, characters.length - 1, true)];
+    static generateCharacters(distribution, characters, minCount, maxCount) {
+        const filteredDistribution = {};
+        for (const character of characters) {
+            filteredDistribution[character] = distribution[character];
         }
-        return word;
+        return this.generateCharactersByDistribution(filteredDistribution, NumberGenerator.random(minCount, maxCount, true));
     }
 }

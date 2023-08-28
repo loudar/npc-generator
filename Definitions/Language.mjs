@@ -4,18 +4,26 @@ import {WordGenerator} from "../Generators/WordGenerator.mjs";
 
 export class Language {
     static new() {
-        const characterDistribution = this.generateCharacterDistribution();
-        const words = this.generateWords(characterDistribution, 100);
+        const languageComplexity = NumberGenerator.randomWithBias(0, 1, 0.5, 0.5);
+        const characterDistribution = this.generateCharacterDistribution(languageComplexity);
+        const words = this.generateWords(characterDistribution, languageComplexity, 5000 + Math.floor(languageComplexity * 100000));
         return {
             characterDistribution,
+            languageComplexity,
             words: words.sort(),
         };
     }
 
-    static generateWords(characterDistribution, wordCount) {
+    static generateWords(characterDistribution, languageComplexity, wordCount) {
         const words = [];
+        let percent = 0;
         for (let i = 0; words.length < wordCount; i++) {
-            const newWord = WordGenerator.generateWord(characterDistribution);
+            const newPercent = Math.floor(((words.length + 1) / wordCount) * 100);
+            if (newPercent > percent) {
+                percent = newPercent;
+                console.log(`${percent}% (${words.length + 1}/${wordCount})`);
+            }
+            const newWord = WordGenerator.generateWord(characterDistribution, languageComplexity);
             if (!words.includes(newWord)) {
                 words.push(newWord);
             }
@@ -23,9 +31,9 @@ export class Language {
         return words;
     }
 
-    static generateCharacterDistribution() {
+    static generateCharacterDistribution(languageComplexity) {
         const characters = "abcdefghijklmnopqrstuvwxyz";
-        const distribution = NumberGenerator.antiExponentialDistribution(characters.length, 1.2, 0.05);
+        const distribution = NumberGenerator.antiExponentialDistribution(characters.length, 2 - languageComplexity, 0.02 + (languageComplexity * 0.1));
         return this.assignDistributionToCharacters(characters, distribution);
     }
 
