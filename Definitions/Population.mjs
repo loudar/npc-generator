@@ -1,6 +1,7 @@
 import {NumberGenerator} from "../Generators/NumberGenerator.mjs";
 import {LandGenerator} from "../Generators/LandGenerator.mjs";
 import {LanguageGenerator} from "../Generators/LanguageGenerator.mjs";
+import {CultureGenerator} from "../Generators/CultureGenerator.mjs";
 
 export class Population {
     constructor() {
@@ -11,6 +12,7 @@ export class Population {
         this.educationRate = NumberGenerator.random(0.2, 0.95);
         this.land = LandGenerator.generateLand();
         this.language = LanguageGenerator.generateLanguage();
+        this.culture = CultureGenerator.generateCulture(this);
         return this;
     }
 }
