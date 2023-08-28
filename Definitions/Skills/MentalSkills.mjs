@@ -83,4 +83,17 @@ export class MentalSkills {
     static Herbalism() {
         return Skill.new("Herbalism");
     }
+
+    static Prospecting() {
+        return Skill.new("Prospecting");
+    }
+
+    static Medicine() {
+        return Skill.new("Medicine")
+            .addSubskill(MentalSkills.Research())
+            .addSubskill(MentalSkills.Understanding())
+            .addSubskill(MentalSkills.Literacy())
+            .addSubskill(MentalSkills.Logic())
+            .addSubskill(MentalSkills.Herbalism());
+    }
 }

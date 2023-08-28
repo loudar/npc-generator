@@ -8,11 +8,11 @@ export class NameGenerator {
 
     static generateFirstName() {
         const names = SourceLoader.get("FirstNames");
-        return names[NumberGenerator.random(0, names.length - 1)];
+        return names[NumberGenerator.random(0, names.length - 1, true)];
     }
 
     static generateLastName() {
         const names = SourceLoader.get("LastNames");
-        return names[NumberGenerator.random(0, names.length - 1)];
+        return names[NumberGenerator.random(0, names.length - 1, true)];
     }
 }

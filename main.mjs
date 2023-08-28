@@ -1,5 +1,6 @@
 import {Professions} from "./Definitions/Professions.mjs";
 import {PopulationGenerator} from "./Generators/PopulationGenerator.mjs";
+import {Numbers} from "./Helpers/Numbers.mjs";
 
 console.log("Generating professions...");
 const professionCategories = Professions.generate();
@@ -14,14 +15,19 @@ console.log("Professions generated:", professions.length);
 const language = "en";
 
 console.log("Generating population...");
+const startTime = new Date();
 const population = PopulationGenerator.generatePopulation();
-console.log("Population generated:", population.people.length);
+const endTime = new Date();
+const diffSeconds = (endTime - startTime) / 1000;
+const formattedDiff = diffSeconds < 1 ? diffSeconds * 1000 + "ms" : diffSeconds + "s";
+console.log("Population generated: " + population.people.length + " people in " + formattedDiff);
+console.log("Education rate: " + Numbers.toPercent(population.info.educationRate));
 
 const professionCounts = population.people.reduce((counts, person) => {
     if (!counts[person.profession]) {
-        counts[person.profession] = 0;
+        counts[person.profession] = { count: 0 };
     }
-    counts[person.profession]++;
+    counts[person.profession].count++;
     return counts;
 }, {});
 

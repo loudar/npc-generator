@@ -60,7 +60,8 @@ export class PhysicalSkills {
     }
 
     static Farming() {
-        return Skill.new("Farming");
+        return Skill.new("Farming")
+            .requires(Conditions.Hands());
     }
 
     static Surgery() {
@@ -86,5 +87,120 @@ export class PhysicalSkills {
     static Balance() {
         return Skill.new("Balance")
             .requires(Conditions.Legs());
+    }
+
+    static Woodcutting() {
+        return Skill.new("Woodcutting")
+            .requires(Conditions.Hands());
+    }
+
+    static Carpentry() {
+        return Skill.new("Carpentry")
+            .requires(Conditions.Hands());
+    }
+
+    static Logging() {
+        return Skill.new("Logging")
+            .requires(Conditions.Hands());
+    }
+
+    static Bowcraft() {
+        return Skill.new("Bowcraft")
+            .requires(Conditions.Hands());
+    }
+
+    static Digging() {
+        return Skill.new("Digging")
+            .requires(Conditions.Hands());
+    }
+
+    static Mining() {
+        return Skill.new("Mining")
+            .addSubskill(PhysicalSkills.Digging());
+    }
+
+    static Blacksmithing() {
+        return Skill.new("Blacksmithing")
+            .requires(Conditions.Hands());
+    }
+
+    static Hammering() {
+        return Skill.new("Hammering")
+            .requires(Conditions.Hands());
+    }
+
+    static Gardening() {
+        return Skill.new("Gardening")
+            .requires(Conditions.Hands());
+    }
+
+    static Milling() {
+        return Skill.new("Milling")
+            .requires(Conditions.Hands());
+    }
+
+    static AnimalHusbandry() {
+        return Skill.new("Animal Husbandry")
+            .requires(Conditions.Hands());
+    }
+
+    static Beekeeping() {
+        return Skill.new("Beekeeping")
+            .requires(Conditions.Hands());
+    }
+
+    static Cutting() {
+        return Skill.new("Cutting")
+            .requires(Conditions.Hands());
+    }
+
+    static Baking() {
+        return Skill.new("Baking")
+            .requires(Conditions.Hands());
+    }
+
+    static Tanning() {
+        return Skill.new("Tanning")
+            .requires(Conditions.Hands());
+    }
+
+    static Leatherworking() {
+        return Skill.new("Leatherworking")
+            .requires(Conditions.Hands());
+    }
+
+    static Sewing() {
+        return Skill.new("Sewing")
+            .requires(Conditions.Hands());
+    }
+
+    static Tailoring() {
+        return Skill.new("Tailoring")
+            .requires(Conditions.Hands());
+    }
+
+    static Skinning() {
+        return Skill.new("Skinning")
+            .requires(Conditions.Hands());
+    }
+
+    static Jewelcrafting() {
+        return Skill.new("Jewelcrafting")
+            .requires(Conditions.Hands());
+    }
+
+    static Weaponsmithing() {
+        return Skill.new("Weaponsmithing")
+            .requires(Conditions.Hands());
+    }
+
+    static Armorsmithing() {
+        return Skill.new("Armorsmithing")
+            .requires(Conditions.Hands());
+    }
+
+    static Cheesemaking() {
+        return Skill.new("Cheesemaking")
+            .requires(Conditions.Hands());
     }
 }

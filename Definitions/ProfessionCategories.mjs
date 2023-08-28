@@ -9,33 +9,33 @@ export class ProfessionCategories {
         return ProfessionCategory.new("Wood")
             .addProfession(
                 Profession.new("Woodcutter")
-                    .addSkill(Skill.new("Woodcutting"))
+                    .addSkill(PhysicalSkills.Woodcutting())
             )
             .addProfession(
                 Profession.new("Carpenter")
-                    .addSkill(Skill.new("Woodcutting"))
-                    .addSkill(Skill.new("Carpentry"))
+                    .addSkill(PhysicalSkills.Woodcutting())
+                    .addSkill(PhysicalSkills.Carpentry())
             )
             .addProfession(
                 Profession.new("Bowyer")
-                    .addSkill(Skill.new("Woodcutting"))
-                    .addSkill(Skill.new("Bowcraft"))
+                    .addSkill(PhysicalSkills.Woodcutting())
+                    .addSkill(PhysicalSkills.Bowcraft())
             )
             .addProfession(
                 Profession.new("Fletcher")
-                    .addSkill(Skill.new("Woodcutting"))
-                    .addSkill(Skill.new("Bowcraft"))
+                    .addSkill(PhysicalSkills.Woodcutting())
+                    .addSkill(PhysicalSkills.Bowcraft())
             )
             .addProfession(
                 Profession.new("Lumberjack")
-                    .addSkill(Skill.new("Woodcutting"))
-                    .addSkill(Skill.new("Logging"))
+                    .addSkill(PhysicalSkills.Woodcutting())
+                    .addSkill(PhysicalSkills.Logging())
             )
             .addProfession(
                 Profession.new("Sawyer")
-                    .addSkill(Skill.new("Woodcutting"))
-                    .addSkill(Skill.new("Logging"))
-                    .addSkill(Skill.new("Carpentry"))
+                    .addSkill(PhysicalSkills.Woodcutting())
+                    .addSkill(PhysicalSkills.Logging())
+                    .addSkill(PhysicalSkills.Carpentry())
             )
     }
 
@@ -43,35 +43,34 @@ export class ProfessionCategories {
         return ProfessionCategory.new("Metal")
             .addProfession(
                 Profession.new("Miner")
-                    .addSkill(Skill.new("Mining"))
-                    .addSkill(Skill.new("Digging"))
+                    .addSkill(PhysicalSkills.Mining())
             )
             .addProfession(
                 Profession.new("Blacksmith")
-                    .addSkill(Skill.new("Blacksmithing"))
-                    .addSkill(Skill.new("Hammering"))
+                    .addSkill(PhysicalSkills.Blacksmithing())
+                    .addSkill(PhysicalSkills.Hammering())
             )
             .addProfession(
                 Profession.new("Armorer")
-                    .addSkill(Skill.new("Blacksmithing"))
-                    .addSkill(Skill.new("Armorsmithing"))
-                    .addSkill(Skill.new("Hammering"))
+                    .addSkill(PhysicalSkills.Blacksmithing())
+                    .addSkill(PhysicalSkills.Armorsmithing())
+                    .addSkill(PhysicalSkills.Hammering())
             )
             .addProfession(
                 Profession.new("Weaponsmith")
-                    .addSkill(Skill.new("Blacksmithing"))
-                    .addSkill(Skill.new("Weaponsmithing"))
-                    .addSkill(Skill.new("Hammering"))
+                    .addSkill(PhysicalSkills.Blacksmithing())
+                    .addSkill(PhysicalSkills.Weaponsmithing())
+                    .addSkill(PhysicalSkills.Hammering())
             )
             .addProfession(
                 Profession.new("Jeweler")
-                    .addSkill(Skill.new("Blacksmithing"))
-                    .addSkill(Skill.new("Jewelcrafting"))
+                    .addSkill(PhysicalSkills.Blacksmithing())
+                    .addSkill(PhysicalSkills.Jewelcrafting())
             )
             .addProfession(
                 Profession.new("Prospector")
-                    .addSkill(Skill.new("Mining"))
-                    .addSkill(Skill.new("Prospecting"))
+                    .addSkill(PhysicalSkills.Mining())
+                    .addSkill(MentalSkills.Prospecting())
             )
     }
 
@@ -79,34 +78,34 @@ export class ProfessionCategories {
         return ProfessionCategory.new("Leather")
             .addProfession(
                 Profession.new("Tanner")
-                    .addSkill(Skill.new("Tanning"))
+                    .addSkill(PhysicalSkills.Tanning())
             )
             .addProfession(
                 Profession.new("Leatherworker")
-                    .addSkill(Skill.new("Tanning"))
-                    .addSkill(Skill.new("Leatherworking"))
+                    .addSkill(PhysicalSkills.Tanning())
+                    .addSkill(PhysicalSkills.Leatherworking())
             )
             .addProfession(
                 Profession.new("Tailor")
-                    .addSkill(Skill.new("Tailoring"))
-                    .addSkill(Skill.new("Sewing"))
+                    .addSkill(PhysicalSkills.Tailoring())
+                    .addSkill(PhysicalSkills.Sewing())
             )
             .addProfession(
                 Profession.new("Furrier")
-                    .addSkill(Skill.new("Tanning"))
-                    .addSkill(Skill.new("Leatherworking"))
-                    .addSkill(Skill.new("Sewing"))
+                    .addSkill(PhysicalSkills.Tanning())
+                    .addSkill(PhysicalSkills.Leatherworking())
+                    .addSkill(PhysicalSkills.Sewing())
             )
             .addProfession(
                 Profession.new("Saddler")
-                    .addSkill(Skill.new("Tanning"))
-                    .addSkill(Skill.new("Leatherworking"))
-                    .addSkill(Skill.new("Sewing"))
+                    .addSkill(PhysicalSkills.Tanning())
+                    .addSkill(PhysicalSkills.Leatherworking())
+                    .addSkill(PhysicalSkills.Sewing())
             )
             .addProfession(
                 Profession.new("Skinner")
-                    .addSkill(Skill.new("Tanning"))
-                    .addSkill(Skill.new("Skinning"))
+                    .addSkill(PhysicalSkills.Tanning())
+                    .addSkill(PhysicalSkills.Skinning())
             )
     }
 
@@ -115,13 +114,12 @@ export class ProfessionCategories {
             .addProfession(
                 Profession.new("Farmer")
                     .addSkill(PhysicalSkills.Farming())
-                    .addSkill(Skill.new("Driving"))
             )
             .addProfession(
                 Profession.new("Cook")
                     .addSkill(PhysicalSkills.Cooking())
-                    .addSkill(Skill.new("Cutting"))
-                    .addSkill(Skill.new("Baking"))
+                    .addSkill(PhysicalSkills.Cutting())
+                    .addSkill(PhysicalSkills.Baking())
                     .addSkill(MentalSkills.Herbalism())
             )
             .addProfession(
@@ -130,8 +128,9 @@ export class ProfessionCategories {
             )
             .addProfession(
                 Profession.new("Butcher")
-                    .addSkill(Skill.new("Cutting"))
-                    .addSkill(Skill.new("Skinning"))
+                    .addSkill(PhysicalSkills.Cutting())
+                    .addSkill(PhysicalSkills.Skinning())
+                    .addSkill(PhysicalSkills.Hammering())
             )
             .addProfession(
                 Profession.new("Fisherman")
@@ -148,32 +147,32 @@ export class ProfessionCategories {
             .addProfession(
                 Profession.new("Gardener")
                     .addSkill(PhysicalSkills.Farming())
-                    .addSkill(Skill.new("Gardening"))
+                    .addSkill(PhysicalSkills.Gardening())
             )
             .addProfession(
                 Profession.new("Herbalist")
                     .addSkill(PhysicalSkills.Farming())
-                    .addSkill(Skill.new("Gardening"))
+                    .addSkill(PhysicalSkills.Gardening())
                     .addSkill(MentalSkills.Herbalism())
             )
             .addProfession(
                 Profession.new("Miller")
                     .addSkill(PhysicalSkills.Farming())
-                    .addSkill(Skill.new("Milling"))
+                    .addSkill(PhysicalSkills.Milling())
             )
             .addProfession(
                 Profession.new("Beekeeper")
-                    .addSkill(PhysicalSkills.Farming())
-                    .addSkill(Skill.new("Beekeeping"))
+                    .addSkill(PhysicalSkills.AnimalHusbandry())
+                    .addSkill(PhysicalSkills.Beekeeping())
             )
             .addProfession(
                 Profession.new("Cheesemaker")
-                    .addSkill(Skill.new("Animal Husbandry"))
-                    .addSkill(Skill.new("Cheesemaking"))
+                    .addSkill(PhysicalSkills.AnimalHusbandry())
+                    .addSkill(PhysicalSkills.Cheesemaking())
             )
             .addProfession(
                 Profession.new("Dairyman")
-                    .addSkill(Skill.new("Animal Husbandry"))
+                    .addSkill(PhysicalSkills.AnimalHusbandry())
             )
             .addProfession(
                 Profession.new("Distiller")
@@ -338,6 +337,10 @@ export class ProfessionCategories {
                     .addSkill(MentalSkills.Research())
                     .addSkill(PhysicalSkills.Drawing())
                     .addSkill(MentalSkills.Creativity().optional())
+            )
+            .addProfession(
+                Profession.new("Doctor")
+                    .addSkill(MentalSkills.Medicine())
             )
     }
 }
