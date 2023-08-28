@@ -1,7 +1,8 @@
-import {Professions} from "./Definitions/Professions.mjs";
-import {PopulationGenerator} from "./Generators/PopulationGenerator.mjs";
-import {Numbers} from "./Helpers/Numbers.mjs";
+import {Professions} from "../Definitions/Professions.mjs";
+import {PopulationGenerator} from "../Generators/PopulationGenerator.mjs";
+import {Numbers} from "../Helpers/Numbers.mjs";
 
+process.chdir(process.cwd() + "/../");
 console.log("Generating professions...");
 const professionCategories = Professions.generate();
 const professions = [];

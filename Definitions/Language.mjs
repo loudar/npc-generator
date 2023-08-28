@@ -6,12 +6,48 @@ export class Language {
     static new() {
         const languageComplexity = NumberGenerator.randomWithBias(0, 1, 0.5, 0.5);
         const characterDistribution = this.generateCharacterDistribution(languageComplexity);
-        const words = this.generateWords(characterDistribution, languageComplexity, 5000 + Math.floor(languageComplexity * 100000));
+        const wordList = this.generateWords(characterDistribution, languageComplexity, 5000 + Math.floor(languageComplexity * 500 * 1000));
+        const typeDistribution = this.generateTypeDistribution();
+        const words = this.categorizeWords(wordList, typeDistribution);
         return {
             characterDistribution,
             languageComplexity,
-            words: words.sort(),
+            dictionary: words.sort((a, b) => a.word.localeCompare(b.word))
         };
+    }
+
+    static generateTypeDistribution(wordList) {
+        return {
+            nouns: 0.5,
+            verbs: 0.2,
+            adjectives: 0.2,
+            adverbs: 0.1,
+        }
+    }
+
+    static categorizeWords(words, typeDistribution) {
+        const categorizedWords = [];
+        for (const word of words) {
+            const type = this.getRandomKeyByDistribution(typeDistribution);
+            categorizedWords.push({word, type});
+        }
+        return categorizedWords;
+    }
+
+    static getRandomKeyByDistribution(distribution) {
+        const randomValue = Math.random();
+        let accumulated = 0;
+
+        const keys = Object.keys(distribution).sort(() => Math.random() - 0.5);
+
+        for (let key of keys) {
+            accumulated += distribution[key];
+            if (randomValue <= accumulated) {
+                return key;
+            }
+        }
+
+        return keys[keys.length - 1];
     }
 
     static generateWords(characterDistribution, languageComplexity, wordCount) {
