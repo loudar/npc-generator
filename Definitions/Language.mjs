@@ -57,7 +57,7 @@ export class Language {
             const newPercent = Math.floor(((words.length + 1) / wordCount) * 100);
             if (newPercent > percent) {
                 percent = newPercent;
-                console.log(`${percent}% (${words.length + 1}/${wordCount})`);
+                console.log(`GEN:LANG_${percent}% (${words.length + 1}/${wordCount})`);
             }
             const newWord = WordGenerator.generateWord(characterDistribution, languageComplexity);
             if (!words.includes(newWord)) {

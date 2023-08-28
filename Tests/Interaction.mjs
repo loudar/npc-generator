@@ -1,7 +1,7 @@
-import {Professions} from "./Definitions/Professions.mjs";
-import {CharacterGenerator} from "./Generators/CharacterGenerator.mjs";
-import {Population} from "./Info/Population.mjs";
-import {MentalSkills} from "./Definitions/Skills/MentalSkills.mjs";
+import {Professions} from "../Definitions/Professions.mjs";
+import {Population} from "../Definitions/Population.mjs";
+import {CharacterGenerator} from "../Generators/CharacterGenerator.mjs";
+import {MentalSkills} from "../Definitions/Skills/MentalSkills.mjs";
 
 console.log("Generating professions...");
 const professionCategories = Professions.generate();

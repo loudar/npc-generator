@@ -5,20 +5,13 @@ export class WordGenerator {
     static generateWord(characterDistribution, languageComplexity) {
         const wordLength = this.generateWordLength(languageComplexity);
         const characters = this.generateCharactersByDistribution(characterDistribution, wordLength);
-        let word = this.buildWordFromArray(characters);
+        let word = this.buildStringFromArray(characters);
         word = this.ensureVowels(word, characterDistribution);
         return word.charAt(0).toUpperCase() + word.slice(1);
     }
 
-    static buildWordFromArray(characters) {
-        let word = "";
-        let lastCharacter = "";
-        const originalLength = characters.length;
-        for (let i = 0; i < characters.length && word.length < originalLength * 2; i++) {
-            const character = characters[i];
-            word += character;
-        }
-        return word;
+    static buildStringFromArray(characters) {
+        return characters.join("");
     }
 
     static isVowel(character) {
@@ -26,7 +19,7 @@ export class WordGenerator {
     }
 
     static ensureVowels(word, distribution) {
-        const regex = /([^aeiou]{4,})/gi; // Matches sequences of 4 or more consonants
+        const regex = /([^aeiouyj]{4,})/gi; // Matches sequences of 4 or more consonants
         let match = regex.exec(word);
 
         while (match !== null) {
@@ -57,12 +50,12 @@ export class WordGenerator {
     }
 
     static vowels(asArray = false) {
-        const vowels = "aeiou";
+        const vowels = "aeiouyj";
         return !asArray ? vowels : vowels.split("");
     }
 
     static consonants(asArray = false) {
-        const consonants = "bcdfghjklmnpqrstvwxyz";
+        const consonants = "bcdfghklmnpqrstvwxz";
         return !asArray ? consonants : consonants.split("");
     }
 
