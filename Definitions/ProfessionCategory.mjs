@@ -1,13 +1,13 @@
 export class ProfessionCategory {
-    static new(name) {
-        return {
-            name: name,
-            type: "ProfessionCategory",
-            professions: [],
-            addProfession: function(profession) {
-                this.professions.push(profession);
-                return this;
-            }
-        };
+    constructor(name) {
+        this.name = name;
+        this.type = "ProfessionCategory";
+        this.professions = [];
+        return this;
+    }
+
+    addProfession(profession) {
+        this.professions.push(profession);
+        return this;
     }
 }

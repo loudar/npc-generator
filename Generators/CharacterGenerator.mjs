@@ -4,7 +4,7 @@ import {BackgroundGenerator} from "./BackgroundGenerator.mjs";
 
 export class CharacterGenerator {
     static generateCharacter(population) {
-        const character = Character.new(NameGenerator.generateName());
+        const character = new Character(NameGenerator.generateName());
         BackgroundGenerator.generateBackground(character, population);
         return character;
     }

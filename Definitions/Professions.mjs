@@ -1,7 +1,7 @@
 import {ProfessionCategories} from "./ProfessionCategories.mjs";
 
 export class Professions {
-    static generate() {
+    static define() {
         return [
             ProfessionCategories.WOOD(),
             ProfessionCategories.METAL(),
@@ -12,7 +12,7 @@ export class Professions {
     }
 
     static getAll() {
-        const professionCategories = Professions.generate();
+        const professionCategories = Professions.define();
         const professions = [];
         for (let category of professionCategories) {
             for (let profession of category.professions) {

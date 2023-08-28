@@ -4,7 +4,7 @@ import {Numbers} from "../Helpers/Numbers.mjs";
 
 process.chdir(process.cwd() + "/../");
 console.log("Generating professions...");
-const professionCategories = Professions.generate();
+const professionCategories = Professions.define();
 const professions = [];
 for (let category of professionCategories) {
     for (let profession of category.professions) {

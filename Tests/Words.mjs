@@ -1,7 +1,7 @@
-import {Language} from "../Definitions/Language.mjs";
+import {LanguageGenerator} from "../Generators/LanguageGenerator.mjs";
 import fs from "fs";
 
-const language = Language.new();
+const language = LanguageGenerator.generateLanguage();
 fs.writeFileSync(`Results/Language-${Date.now()}.json`, JSON.stringify(language, null, 4));
 const dictionary = language.dictionary;
 const averageLength = dictionary.reduce((acc, entry) => acc + entry.word.length, 0) / dictionary.length;

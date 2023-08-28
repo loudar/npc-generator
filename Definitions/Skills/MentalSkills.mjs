@@ -3,98 +3,98 @@ import {PhysicalSkills} from "./PhysicalSkills.mjs";
 
 export class MentalSkills {
     static Logic() {
-        return Skill.new("Logic");
+        return new Skill("Logic");
     }
 
     static Hospitality() {
-        return Skill.new("Hospitality");
+        return new Skill("Hospitality");
     }
 
     static Charisma() {
-        return Skill.new("Charisma");
+        return new Skill("Charisma");
     }
 
     static Patience() {
-        return Skill.new("Patience");
+        return new Skill("Patience");
     }
 
     static Negotiation() {
-        return Skill.new("Negotiation")
+        return new Skill("Negotiation")
             .addSubskill(MentalSkills.Logic())
             .addSubskill(PhysicalSkills.Speaking())
             .addSubskill(MentalSkills.Charisma());
     }
 
     static Creativity() {
-        return Skill.new("Creativity");
+        return new Skill("Creativity");
     }
 
     static Astrology() {
-        return Skill.new("Astrology");
+        return new Skill("Astrology");
     }
 
     static Astronomy() {
-        return Skill.new("Astronomy")
+        return new Skill("Astronomy")
             .addSubskill(PhysicalSkills.Sight());
     }
 
     static Engineering() {
-        return Skill.new("Engineering")
+        return new Skill("Engineering")
             .addSubskill(MentalSkills.Mathematics())
             .addSubskill(PhysicalSkills.Drawing());
     }
 
     static Finance() {
-        return Skill.new("Finance");
+        return new Skill("Finance");
     }
 
     static Mathematics() {
-        return Skill.new("Mathematics")
+        return new Skill("Mathematics")
             .addSubskill(MentalSkills.Understanding())
             .addSubskill(MentalSkills.Literacy())
             .addSubskill(MentalSkills.Logic());
     }
 
     static Literacy() {
-        return Skill.new("Literacy")
+        return new Skill("Literacy")
             .addSubskill(PhysicalSkills.Read())
             .addSubskill(PhysicalSkills.Writing());
     }
 
     static Research() {
-        return Skill.new("Research")
+        return new Skill("Research")
             .addSubskill(MentalSkills.Understanding())
             .addSubskill(MentalSkills.Literacy());
     }
 
     static Authority() {
-        return Skill.new("Authority");
+        return new Skill("Authority");
     }
 
     static Understanding() {
-        return Skill.new("Understanding");
+        return new Skill("Understanding");
     }
 
     static Cartography() {
-        return Skill.new("Cartography")
+        return new Skill("Cartography")
             .addSubskill(MentalSkills.Mathematics())
             .addSubskill(PhysicalSkills.Drawing());
     }
 
     static Belief() {
-        return Skill.new("Belief");
+        return new Skill("Belief");
     }
 
     static Herbalism() {
-        return Skill.new("Herbalism");
+        return new Skill("Herbalism");
     }
 
     static Prospecting() {
-        return Skill.new("Prospecting");
+        return new Skill("Prospecting");
     }
 
     static Medicine() {
-        return Skill.new("Medicine")
+        return new Skill("Medicine")
             .addSubskill(MentalSkills.Research())
             .addSubskill(MentalSkills.Understanding())
             .addSubskill(MentalSkills.Literacy())
@@ -103,6 +103,6 @@ export class MentalSkills {
     }
 
     static Alchemy() {
-        return Skill.new("Alchemy");
+        return new Skill("Alchemy");
     }
 }

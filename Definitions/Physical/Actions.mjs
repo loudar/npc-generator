@@ -3,7 +3,7 @@ import {Action} from "./Action.mjs";
 
 export class Actions {
     static BreakObject() {
-        return Action.new("break")
+        return new Action("break")
             .set((object) => {
                 object.setState("broken");
             })

@@ -6,33 +6,33 @@ import {MentalSkills} from "./Skills/MentalSkills.mjs";
 
 export class ProfessionCategories {
     static WOOD() {
-        return ProfessionCategory.new("Wood")
+        return new ProfessionCategory("Wood")
             .addProfession(
-                Profession.new("Woodcutter")
+                new Profession("Woodcutter")
                     .addSkill(PhysicalSkills.Woodcutting())
             )
             .addProfession(
-                Profession.new("Carpenter")
+                new Profession("Carpenter")
                     .addSkill(PhysicalSkills.Woodcutting())
                     .addSkill(PhysicalSkills.Carpentry())
             )
             .addProfession(
-                Profession.new("Bowyer")
+                new Profession("Bowyer")
                     .addSkill(PhysicalSkills.Woodcutting())
                     .addSkill(PhysicalSkills.Bowcraft())
             )
             .addProfession(
-                Profession.new("Fletcher")
+                new Profession("Fletcher")
                     .addSkill(PhysicalSkills.Woodcutting())
                     .addSkill(PhysicalSkills.Bowcraft())
             )
             .addProfession(
-                Profession.new("Lumberjack")
+                new Profession("Lumberjack")
                     .addSkill(PhysicalSkills.Woodcutting())
                     .addSkill(PhysicalSkills.Logging())
             )
             .addProfession(
-                Profession.new("Sawyer")
+                new Profession("Sawyer")
                     .addSkill(PhysicalSkills.Woodcutting())
                     .addSkill(PhysicalSkills.Logging())
                     .addSkill(PhysicalSkills.Carpentry())
@@ -40,157 +40,157 @@ export class ProfessionCategories {
     }
 
     static METAL() {
-        return ProfessionCategory.new("Metal")
+        return new ProfessionCategory("Metal")
             .addProfession(
-                Profession.new("Miner")
+                new Profession("Miner")
                     .addSkill(PhysicalSkills.Mining())
             )
             .addProfession(
-                Profession.new("Blacksmith")
+                new Profession("Blacksmith")
                     .addSkill(PhysicalSkills.Smithing())
             )
             .addProfession(
-                Profession.new("Armorer")
+                new Profession("Armorer")
                     .addSkill(PhysicalSkills.Smithing())
                     .addSkill(PhysicalSkills.Armorsmithing())
             )
             .addProfession(
-                Profession.new("Weaponsmith")
+                new Profession("Weaponsmith")
                     .addSkill(PhysicalSkills.Smithing())
                     .addSkill(PhysicalSkills.Weaponsmithing())
             )
             .addProfession(
-                Profession.new("Jeweler")
+                new Profession("Jeweler")
                     .addSkill(PhysicalSkills.Smithing())
                     .addSkill(PhysicalSkills.Jewelcrafting())
             )
             .addProfession(
-                Profession.new("Prospector")
+                new Profession("Prospector")
                     .addSkill(PhysicalSkills.Mining())
                     .addSkill(MentalSkills.Prospecting())
             )
             .addProfession(
-                Profession.new("Smith")
+                new Profession("Smith")
                     .addSkill(PhysicalSkills.Smithing())
             )
     }
 
     static LEATHER() {
-        return ProfessionCategory.new("Leather")
+        return new ProfessionCategory("Leather")
             .addProfession(
-                Profession.new("Tanner")
+                new Profession("Tanner")
                     .addSkill(PhysicalSkills.Tanning())
             )
             .addProfession(
-                Profession.new("Leatherworker")
+                new Profession("Leatherworker")
                     .addSkill(PhysicalSkills.Tanning())
                     .addSkill(PhysicalSkills.Leatherworking())
             )
             .addProfession(
-                Profession.new("Tailor")
+                new Profession("Tailor")
                     .addSkill(PhysicalSkills.Tailoring())
                     .addSkill(PhysicalSkills.Sewing())
             )
             .addProfession(
-                Profession.new("Furrier")
+                new Profession("Furrier")
                     .addSkill(PhysicalSkills.Tanning())
                     .addSkill(PhysicalSkills.Leatherworking())
                     .addSkill(PhysicalSkills.Sewing())
             )
             .addProfession(
-                Profession.new("Saddler")
+                new Profession("Saddler")
                     .addSkill(PhysicalSkills.Tanning())
                     .addSkill(PhysicalSkills.Leatherworking())
                     .addSkill(PhysicalSkills.Sewing())
             )
             .addProfession(
-                Profession.new("Skinner")
+                new Profession("Skinner")
                     .addSkill(PhysicalSkills.Tanning())
                     .addSkill(PhysicalSkills.Skinning())
             )
     }
 
     static FOOD() {
-        return ProfessionCategory.new("Food")
+        return new ProfessionCategory("Food")
             .addProfession(
-                Profession.new("Farmer")
+                new Profession("Farmer")
                     .addSkill(PhysicalSkills.Farming())
             )
             .addProfession(
-                Profession.new("Cook")
+                new Profession("Cook")
                     .addSkill(PhysicalSkills.Cooking())
                     .addSkill(PhysicalSkills.Cutting())
                     .addSkill(PhysicalSkills.Baking())
                     .addSkill(MentalSkills.Herbalism())
             )
             .addProfession(
-                Profession.new("Baker")
-                    .addSkill(Skill.new("Baking"))
+                new Profession("Baker")
+                    .addSkill(new Skill("Baking"))
             )
             .addProfession(
-                Profession.new("Butcher")
+                new Profession("Butcher")
                     .addSkill(PhysicalSkills.Cutting())
                     .addSkill(PhysicalSkills.Skinning())
                     .addSkill(PhysicalSkills.Hammering())
             )
             .addProfession(
-                Profession.new("Fisherman")
+                new Profession("Fisherman")
                     .addSkill(PhysicalSkills.Fishing())
             )
             .addProfession(
-                Profession.new("Brewer")
+                new Profession("Brewer")
                     .addSkill(PhysicalSkills.Brewing())
             )
             .addProfession(
-                Profession.new("Vintner")
+                new Profession("Vintner")
                     .addSkill(PhysicalSkills.Brewing())
             )
             .addProfession(
-                Profession.new("Gardener")
+                new Profession("Gardener")
                     .addSkill(PhysicalSkills.Farming())
                     .addSkill(PhysicalSkills.Gardening())
             )
             .addProfession(
-                Profession.new("Herbalist")
+                new Profession("Herbalist")
                     .addSkill(PhysicalSkills.Farming())
                     .addSkill(PhysicalSkills.Gardening())
                     .addSkill(MentalSkills.Herbalism())
             )
             .addProfession(
-                Profession.new("Miller")
+                new Profession("Miller")
                     .addSkill(PhysicalSkills.Farming())
                     .addSkill(PhysicalSkills.Milling())
             )
             .addProfession(
-                Profession.new("Beekeeper")
+                new Profession("Beekeeper")
                     .addSkill(PhysicalSkills.AnimalHusbandry())
                     .addSkill(PhysicalSkills.Beekeeping())
             )
             .addProfession(
-                Profession.new("Cheesemaker")
+                new Profession("Cheesemaker")
                     .addSkill(PhysicalSkills.AnimalHusbandry())
                     .addSkill(PhysicalSkills.Cheesemaking())
             )
             .addProfession(
-                Profession.new("Dairyman")
+                new Profession("Dairyman")
                     .addSkill(PhysicalSkills.AnimalHusbandry())
             )
             .addProfession(
-                Profession.new("Distiller")
+                new Profession("Distiller")
                     .addSkill(PhysicalSkills.Brewing())
                     .addSkill(PhysicalSkills.Distilling())
             )
             .addProfession(
-                Profession.new("Meadmaker")
+                new Profession("Meadmaker")
                     .addSkill(PhysicalSkills.Brewing())
                     .addSkill(PhysicalSkills.Distilling())
             )
     }
 
     static SERVICE() {
-        return ProfessionCategory.new("Service")
+        return new ProfessionCategory("Service")
             .addProfession(
-                Profession.new("Server")
+                new Profession("Server")
                     .addSkill(PhysicalSkills.Listening())
                     .addSkill(PhysicalSkills.Speaking())
                     .addSkill(MentalSkills.Charisma().optional())
@@ -198,7 +198,7 @@ export class ProfessionCategories {
                     .addSkill(MentalSkills.Patience().optional())
             )
             .addProfession(
-                Profession.new("Storeclerk")
+                new Profession("Storeclerk")
                     .addSkill(PhysicalSkills.Listening())
                     .addSkill(PhysicalSkills.Speaking())
                     .addSkill(MentalSkills.Charisma().optional())
@@ -206,7 +206,7 @@ export class ProfessionCategories {
                     .addSkill(MentalSkills.Patience().optional())
             )
             .addProfession(
-                Profession.new("Bartender")
+                new Profession("Bartender")
                     .addSkill(PhysicalSkills.Listening())
                     .addSkill(PhysicalSkills.Speaking())
                     .addSkill(MentalSkills.Charisma().optional())
@@ -214,7 +214,7 @@ export class ProfessionCategories {
                     .addSkill(PhysicalSkills.Mixing().optional())
             )
             .addProfession(
-                Profession.new("Innkeeper")
+                new Profession("Innkeeper")
                     .addSkill(PhysicalSkills.Listening())
                     .addSkill(PhysicalSkills.Speaking())
                     .addSkill(MentalSkills.Charisma())
@@ -223,7 +223,7 @@ export class ProfessionCategories {
                     .addSkill(PhysicalSkills.Cooking())
             )
             .addProfession(
-                Profession.new("Merchant")
+                new Profession("Merchant")
                     .addSkill(PhysicalSkills.Listening())
                     .addSkill(PhysicalSkills.Speaking())
                     .addSkill(MentalSkills.Charisma().optional())
@@ -231,7 +231,7 @@ export class ProfessionCategories {
                     .addSkill(MentalSkills.Finance())
             )
             .addProfession(
-                Profession.new("Banker")
+                new Profession("Banker")
                     .addSkill(PhysicalSkills.Listening())
                     .addSkill(PhysicalSkills.Speaking())
                     .addSkill(MentalSkills.Charisma().optional())
@@ -240,34 +240,34 @@ export class ProfessionCategories {
                     .addSkill(MentalSkills.Negotiation())
             )
             .addProfession(
-                Profession.new("Scribe")
+                new Profession("Scribe")
                     .addSkill(PhysicalSkills.Listening())
                     .addSkill(PhysicalSkills.Calligraphy().optional())
                     .addSkill(MentalSkills.Literacy())
                     .addSkill(PhysicalSkills.Listening())
             )
             .addProfession(
-                Profession.new("Scholar")
+                new Profession("Scholar")
                     .addSkill(MentalSkills.Literacy())
                     .addSkill(MentalSkills.Research())
                     .addSkill(PhysicalSkills.Calligraphy().optional())
             )
             .addProfession(
-                Profession.new("Librarian")
+                new Profession("Librarian")
                     .addSkill(PhysicalSkills.Listening())
                     .addSkill(MentalSkills.Literacy())
                     .addSkill(MentalSkills.Research().optional())
                     .addSkill(PhysicalSkills.Calligraphy().optional())
             )
             .addProfession(
-                Profession.new("Mathematician")
+                new Profession("Mathematician")
                     .addSkill(MentalSkills.Literacy())
                     .addSkill(MentalSkills.Research())
                     .addSkill(PhysicalSkills.Calligraphy().optional())
                     .addSkill(MentalSkills.Mathematics())
             )
             .addProfession(
-                Profession.new("Teacher")
+                new Profession("Teacher")
                     .addSkill(PhysicalSkills.Listening())
                     .addSkill(PhysicalSkills.Speaking())
                     .addSkill(MentalSkills.Literacy())
@@ -277,13 +277,13 @@ export class ProfessionCategories {
                     .addSkill(MentalSkills.Patience().optional())
             )
             .addProfession(
-                Profession.new("Student")
+                new Profession("Student")
                     .addSkill(PhysicalSkills.Listening())
                     .addSkill(PhysicalSkills.Speaking())
                     .addSkill(PhysicalSkills.Writing())
             )
             .addProfession(
-                Profession.new("Professor")
+                new Profession("Professor")
                     .addSkill(PhysicalSkills.Speaking())
                     .addSkill(MentalSkills.Literacy())
                     .addSkill(MentalSkills.Research())
@@ -291,7 +291,7 @@ export class ProfessionCategories {
                     .addSkill(MentalSkills.Patience())
             )
             .addProfession(
-                Profession.new("Philosopher")
+                new Profession("Philosopher")
                     .addSkill(PhysicalSkills.Listening())
                     .addSkill(PhysicalSkills.Speaking())
                     .addSkill(MentalSkills.Literacy())
@@ -299,14 +299,14 @@ export class ProfessionCategories {
                     .addSkill(MentalSkills.Patience())
             )
             .addProfession(
-                Profession.new("Priest")
+                new Profession("Priest")
                     .addSkill(PhysicalSkills.Listening())
                     .addSkill(PhysicalSkills.Speaking())
                     .addSkill(MentalSkills.Belief())
                     .addSkill(MentalSkills.Patience())
             )
             .addProfession(
-                Profession.new("Politician")
+                new Profession("Politician")
                     .addSkill(PhysicalSkills.Listening())
                     .addSkill(PhysicalSkills.Speaking())
                     .addSkill(MentalSkills.Charisma())
@@ -314,14 +314,14 @@ export class ProfessionCategories {
                     .addSkill(MentalSkills.Patience())
             )
             .addProfession(
-                Profession.new("Sage")
+                new Profession("Sage")
                     .addSkill(MentalSkills.Literacy())
                     .addSkill(MentalSkills.Research())
                     .addSkill(PhysicalSkills.Calligraphy())
                     .addSkill(MentalSkills.Patience())
             )
             .addProfession(
-                Profession.new("Apothecary")
+                new Profession("Apothecary")
                     .addSkill(PhysicalSkills.Listening())
                     .addSkill(PhysicalSkills.Speaking())
                     .addSkill(MentalSkills.Literacy())
@@ -330,7 +330,7 @@ export class ProfessionCategories {
                     .addSkill(MentalSkills.Herbalism())
             )
             .addProfession(
-                Profession.new("Physician")
+                new Profession("Physician")
                     .addSkill(PhysicalSkills.Listening())
                     .addSkill(PhysicalSkills.Speaking())
                     .addSkill(MentalSkills.Literacy())
@@ -339,7 +339,7 @@ export class ProfessionCategories {
                     .addSkill(PhysicalSkills.Surgery())
             )
             .addProfession(
-                Profession.new("Alchemist")
+                new Profession("Alchemist")
                     .addSkill(MentalSkills.Literacy().optional())
                     .addSkill(MentalSkills.Research().optional())
                     .addSkill(PhysicalSkills.Calligraphy().optional())
@@ -348,7 +348,7 @@ export class ProfessionCategories {
                     .addSkill(MentalSkills.Alchemy())
             )
             .addProfession(
-                Profession.new("Astrologer")
+                new Profession("Astrologer")
                     .addSkill(MentalSkills.Research().optional())
                     .addSkill(PhysicalSkills.Calligraphy().optional())
                     .addSkill(MentalSkills.Mathematics().optional())
@@ -356,31 +356,31 @@ export class ProfessionCategories {
                     .addSkill(MentalSkills.Astrology())
             )
             .addProfession(
-                Profession.new("Astronomer")
+                new Profession("Astronomer")
                     .addSkill(MentalSkills.Research().optional())
                     .addSkill(PhysicalSkills.Calligraphy().optional())
                     .addSkill(MentalSkills.Mathematics().optional())
                     .addSkill(MentalSkills.Astronomy())
             )
             .addProfession(
-                Profession.new("Cartographer")
+                new Profession("Cartographer")
                     .addSkill(MentalSkills.Research().optional())
                     .addSkill(MentalSkills.Cartography())
             )
             .addProfession(
-                Profession.new("Engineer")
+                new Profession("Engineer")
                     .addSkill(MentalSkills.Research())
                     .addSkill(PhysicalSkills.Drawing())
                     .addSkill(MentalSkills.Engineering())
             )
             .addProfession(
-                Profession.new("Architect")
+                new Profession("Architect")
                     .addSkill(MentalSkills.Research())
                     .addSkill(PhysicalSkills.Drawing())
                     .addSkill(MentalSkills.Creativity().optional())
             )
             .addProfession(
-                Profession.new("Doctor")
+                new Profession("Doctor")
                     .addSkill(PhysicalSkills.Listening())
                     .addSkill(PhysicalSkills.Speaking())
                     .addSkill(MentalSkills.Medicine())

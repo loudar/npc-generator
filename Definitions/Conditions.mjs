@@ -4,39 +4,39 @@ import {Checks} from "./Checks.mjs";
 
 export class Conditions {
     static Arms() {
-        return Condition.new("Arms")
+        return new Condition("Arms")
             .addCheck((character) => Checks.bodyPartState(character, "arms", States.healthy));
     }
 
     static Hands() {
-        return Condition.new("Hands")
+        return new Condition("Hands")
             .addSubcondition(Conditions.Arms())
             .addCheck((character) => Checks.bodyPartState(character, "hands", States.healthy));
     }
 
     static Legs() {
-        return Condition.new("Legs")
+        return new Condition("Legs")
             .addCheck((character) => Checks.bodyPartState(character, "legs", States.healthy));
     }
 
     static Eyes() {
-        return Condition.new("Eyes")
+        return new Condition("Eyes")
             .addCheck((character) => Checks.bodyPartState(character, "eyes", States.healthy));
     }
 
     static Tongue() {
-        return Condition.new("Tongue")
+        return new Condition("Tongue")
             .addCheck((character) => Checks.bodyPartState(character, "mouth", States.healthy))
             .addCheck((character) => Checks.bodyPartState(character, "tongue", States.healthy));
     }
 
     static Ears() {
-        return Condition.new("Ears")
+        return new Condition("Ears")
             .addCheck((character) => Checks.bodyPartState(character, "ears", States.healthy));
     }
 
     static Healthy() {
-        return Condition.new("HealthyObject")
+        return new Condition("HealthyObject")
             .addCheck((obj) => obj.state === States.healthy);
     }
 }

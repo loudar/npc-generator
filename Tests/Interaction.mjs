@@ -4,7 +4,7 @@ import {CharacterGenerator} from "../Generators/CharacterGenerator.mjs";
 import {MentalSkills} from "../Definitions/Skills/MentalSkills.mjs";
 
 console.log("Generating professions...");
-const professionCategories = Professions.generate();
+const professionCategories = Professions.define();
 const professions = [];
 for (let category of professionCategories) {
     for (let profession of category.professions) {

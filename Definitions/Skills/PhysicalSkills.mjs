@@ -3,211 +3,211 @@ import {Conditions} from "../Conditions.mjs";
 
 export class PhysicalSkills {
     static Listening() {
-        return Skill.new("Listening")
+        return new Skill("Listening")
             .requires(Conditions.Ears());
     }
 
     static Sight() {
-        return Skill.new("Sight")
+        return new Skill("Sight")
             .requires(Conditions.Eyes());
     }
 
     static Calligraphy() {
-        return Skill.new("Calligraphy")
+        return new Skill("Calligraphy")
             .requires(Conditions.Hands())
             .addSubskill(PhysicalSkills.Writing());
     }
 
     static Writing() {
-        return Skill.new("Write")
+        return new Skill("Write")
             .requires(Conditions.Hands())
             .addSubskill(PhysicalSkills.Sight())
     }
 
     static Read() {
-        return Skill.new("Read")
+        return new Skill("Read")
             .addSubskill(PhysicalSkills.Sight());
     }
 
     static Brewing() {
-        return Skill.new("Brewing")
+        return new Skill("Brewing")
             .requires(Conditions.Hands());
     }
 
     static Distilling() {
-        return Skill.new("Distilling")
+        return new Skill("Distilling")
             .requires(Conditions.Hands());
     }
 
     static Drawing() {
-        return Skill.new("Drawing")
+        return new Skill("Drawing")
             .requires(Conditions.Hands());
     }
 
     static Taste() {
-        return Skill.new("Taste")
+        return new Skill("Taste")
             .requires(Conditions.Tongue());
     }
 
     static Mixing() {
-        return Skill.new("Mixing")
+        return new Skill("Mixing")
             .requires(Conditions.Hands());
     }
 
     static Cooking() {
-        return Skill.new("Cooking")
+        return new Skill("Cooking")
             .addSubskill(PhysicalSkills.Sight())
             .addSubskill(PhysicalSkills.Taste());
     }
 
     static Farming() {
-        return Skill.new("Farming")
+        return new Skill("Farming")
             .requires(Conditions.Hands());
     }
 
     static Surgery() {
-        return Skill.new("Surgery")
+        return new Skill("Surgery")
             .requires(Conditions.Hands());
     }
 
     static Butchery() {
-        return Skill.new("Butchery")
+        return new Skill("Butchery")
             .requires(Conditions.Hands());
     }
 
     static Hunting() {
-        return Skill.new("Hunting")
+        return new Skill("Hunting")
             .requires(Conditions.Hands());
     }
 
     static Fishing() {
-        return Skill.new("Fishing")
+        return new Skill("Fishing")
             .requires(Conditions.Hands());
     }
 
     static Balance() {
-        return Skill.new("Balance")
+        return new Skill("Balance")
             .requires(Conditions.Legs());
     }
 
     static Woodcutting() {
-        return Skill.new("Woodcutting")
+        return new Skill("Woodcutting")
             .requires(Conditions.Hands());
     }
 
     static Carpentry() {
-        return Skill.new("Carpentry")
+        return new Skill("Carpentry")
             .requires(Conditions.Hands());
     }
 
     static Logging() {
-        return Skill.new("Logging")
+        return new Skill("Logging")
             .requires(Conditions.Hands());
     }
 
     static Bowcraft() {
-        return Skill.new("Bowcraft")
+        return new Skill("Bowcraft")
             .requires(Conditions.Hands());
     }
 
     static Digging() {
-        return Skill.new("Digging")
+        return new Skill("Digging")
             .requires(Conditions.Hands());
     }
 
     static Mining() {
-        return Skill.new("Mining")
+        return new Skill("Mining")
             .addSubskill(PhysicalSkills.Digging());
     }
 
     static Speaking() {
-        return Skill.new("Speaking")
+        return new Skill("Speaking")
             .requires(Conditions.Tongue());
     }
 
     static Smithing() {
-        return Skill.new("Smithing")
+        return new Skill("Smithing")
             .addSubskill(PhysicalSkills.Hammering())
             .requires(Conditions.Hands());
     }
 
     static Hammering() {
-        return Skill.new("Hammering")
+        return new Skill("Hammering")
             .requires(Conditions.Hands());
     }
 
     static Gardening() {
-        return Skill.new("Gardening")
+        return new Skill("Gardening")
             .requires(Conditions.Hands());
     }
 
     static Milling() {
-        return Skill.new("Milling")
+        return new Skill("Milling")
             .requires(Conditions.Hands());
     }
 
     static AnimalHusbandry() {
-        return Skill.new("Animal Husbandry")
+        return new Skill("Animal Husbandry")
             .requires(Conditions.Hands());
     }
 
     static Beekeeping() {
-        return Skill.new("Beekeeping")
+        return new Skill("Beekeeping")
             .requires(Conditions.Hands());
     }
 
     static Cutting() {
-        return Skill.new("Cutting")
+        return new Skill("Cutting")
             .requires(Conditions.Hands());
     }
 
     static Baking() {
-        return Skill.new("Baking")
+        return new Skill("Baking")
             .requires(Conditions.Hands());
     }
 
     static Tanning() {
-        return Skill.new("Tanning")
+        return new Skill("Tanning")
             .requires(Conditions.Hands());
     }
 
     static Leatherworking() {
-        return Skill.new("Leatherworking")
+        return new Skill("Leatherworking")
             .requires(Conditions.Hands());
     }
 
     static Sewing() {
-        return Skill.new("Sewing")
+        return new Skill("Sewing")
             .requires(Conditions.Hands());
     }
 
     static Tailoring() {
-        return Skill.new("Tailoring")
+        return new Skill("Tailoring")
             .requires(Conditions.Hands());
     }
 
     static Skinning() {
-        return Skill.new("Skinning")
+        return new Skill("Skinning")
             .requires(Conditions.Hands());
     }
 
     static Jewelcrafting() {
-        return Skill.new("Jewelcrafting")
+        return new Skill("Jewelcrafting")
             .requires(Conditions.Hands());
     }
 
     static Weaponsmithing() {
-        return Skill.new("Weaponsmithing")
+        return new Skill("Weaponsmithing")
             .requires(Conditions.Hands());
     }
 
     static Armorsmithing() {
-        return Skill.new("Armorsmithing")
+        return new Skill("Armorsmithing")
             .requires(Conditions.Hands());
     }
 
     static Cheesemaking() {
-        return Skill.new("Cheesemaking")
+        return new Skill("Cheesemaking")
             .requires(Conditions.Hands());
     }
 }
