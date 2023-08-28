@@ -4,7 +4,7 @@ import {CharacterGenerator} from "./CharacterGenerator.mjs";
 export class PopulationGenerator {
     static generatePopulation() {
         const startTime = new Date();
-        const info = Population.new();
+        const info = new Population();
         const people = [];
         // TODO: maybe also generate some general info about culture, locations, etc.
         let percent = 0;
