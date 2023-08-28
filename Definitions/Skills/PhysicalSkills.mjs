@@ -3,7 +3,8 @@ import {Conditions} from "../Conditions.mjs";
 
 export class PhysicalSkills {
     static Listening() {
-        return Skill.new("Listening");
+        return Skill.new("Listening")
+            .requires(Conditions.Ears());
     }
 
     static Sight() {
@@ -14,10 +15,10 @@ export class PhysicalSkills {
     static Calligraphy() {
         return Skill.new("Calligraphy")
             .requires(Conditions.Hands())
-            .addSubskill(PhysicalSkills.Write());
+            .addSubskill(PhysicalSkills.Writing());
     }
 
-    static Write() {
+    static Writing() {
         return Skill.new("Write")
             .requires(Conditions.Hands())
             .addSubskill(PhysicalSkills.Sight())
@@ -119,8 +120,14 @@ export class PhysicalSkills {
             .addSubskill(PhysicalSkills.Digging());
     }
 
-    static Blacksmithing() {
-        return Skill.new("Blacksmithing")
+    static Speaking() {
+        return Skill.new("Speaking")
+            .requires(Conditions.Tongue());
+    }
+
+    static Smithing() {
+        return Skill.new("Smithing")
+            .addSubskill(PhysicalSkills.Hammering())
             .requires(Conditions.Hands());
     }
 

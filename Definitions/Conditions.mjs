@@ -26,7 +26,13 @@ export class Conditions {
 
     static Tongue() {
         return Condition.new("Tongue")
+            .addCheck((character) => Checks.bodyPartState(character, "mouth", States.healthy))
             .addCheck((character) => Checks.bodyPartState(character, "tongue", States.healthy));
+    }
+
+    static Ears() {
+        return Condition.new("Ears")
+            .addCheck((character) => Checks.bodyPartState(character, "ears", States.healthy));
     }
 
     static Healthy() {

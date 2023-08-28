@@ -21,6 +21,7 @@ export class MentalSkills {
     static Negotiation() {
         return Skill.new("Negotiation")
             .addSubskill(MentalSkills.Logic())
+            .addSubskill(PhysicalSkills.Speaking())
             .addSubskill(MentalSkills.Charisma());
     }
 
@@ -57,13 +58,17 @@ export class MentalSkills {
     static Literacy() {
         return Skill.new("Literacy")
             .addSubskill(PhysicalSkills.Read())
-            .addSubskill(PhysicalSkills.Write());
+            .addSubskill(PhysicalSkills.Writing());
     }
 
     static Research() {
         return Skill.new("Research")
             .addSubskill(MentalSkills.Understanding())
             .addSubskill(MentalSkills.Literacy());
+    }
+
+    static Authority() {
+        return Skill.new("Authority");
     }
 
     static Understanding() {
@@ -95,5 +100,9 @@ export class MentalSkills {
             .addSubskill(MentalSkills.Literacy())
             .addSubskill(MentalSkills.Logic())
             .addSubskill(MentalSkills.Herbalism());
+    }
+
+    static Alchemy() {
+        return Skill.new("Alchemy");
     }
 }
