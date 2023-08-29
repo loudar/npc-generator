@@ -2,6 +2,7 @@ import {NumberGenerator} from "./NumberGenerator.mjs";
 import {Numbers} from "../Helpers/Numbers.mjs";
 import {WordGenerator} from "./WordGenerator.mjs";
 import {Language} from "../Definitions/Language.mjs";
+import {DistributionSolver} from "./DistributionSolver.mjs";
 
 export class LanguageGenerator {
     static generateLanguage() {
@@ -25,26 +26,10 @@ export class LanguageGenerator {
     static categorizeWords(words, typeDistribution) {
         const categorizedWords = [];
         for (const word of words) {
-            const type = this.getRandomKeyByDistribution(typeDistribution);
+            const type = DistributionSolver.chooseKeyByDistribution(typeDistribution);
             categorizedWords.push({word, type});
         }
         return categorizedWords;
-    }
-
-    static getRandomKeyByDistribution(distribution) {
-        const randomValue = Math.random();
-        let accumulated = 0;
-
-        const keys = Object.keys(distribution).sort(() => Math.random() - 0.5);
-
-        for (let key of keys) {
-            accumulated += distribution[key];
-            if (randomValue <= accumulated) {
-                return key;
-            }
-        }
-
-        return keys[keys.length - 1];
     }
 
     static generateWords(characterDistribution, languageComplexity, wordCount) {

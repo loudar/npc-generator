@@ -2,6 +2,7 @@ import {SourceLoader} from "./Sources/SourceLoader.mjs";
 import {NumberGenerator} from "./NumberGenerator.mjs";
 import {Land} from "../Definitions/Land.mjs";
 import {Terrain} from "../Definitions/Terrain.mjs";
+import {BuildingGenerator} from "./BuildingGenerator.mjs";
 
 export class LandGenerator {
     static generateName() {
@@ -9,7 +10,7 @@ export class LandGenerator {
         return names[NumberGenerator.random(0, names.length - 1, true)];
     }
 
-    static generateLand() {
+    static generateLand(educationRate) {
         const land = new Land(this.generateName());
         return land;
     }
@@ -44,6 +45,7 @@ export class LandGenerator {
         return names[NumberGenerator.random(0, names.length - 1, true)];
     }
 
-    static generateBuilding() {
+    static generateBuilding(educationRate) {
+        const building = BuildingGenerator.generateBuilding(educationRate);
     }
 }
