@@ -40,7 +40,7 @@ export class LandGenerator {
     }
 
     static generateTerrainName(type) {
-        const names = SourceLoader.get("TerrainNames_" + type);
+        const names = SourceLoader.get("TerrainNames/" + type);
         return names[NumberGenerator.random(0, names.length - 1, true)];
     }
 
