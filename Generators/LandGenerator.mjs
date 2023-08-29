@@ -22,19 +22,20 @@ export class LandGenerator {
          rivers, lakes, forests, roads, bridges, caves, dungeons, ruins, temples, mines, quarries, farms, fields,
          ports, harbors, fortresses, castles, etc.
         */
-        return this.generateTerrains();
+        const terrainCount = NumberGenerator.random(10, 100, true);
+        return this.generateTerrains(terrainCount);
     }
 
-    static generateTerrains() {
+    static generateTerrains(terrainCount) {
         const terrainTypes = SourceLoader.get("TerrainTypes");
-        const terrainCount = NumberGenerator.random(10, 20, true);
         const coordinateSize = 100;
         const terrains = [];
         for (let i = 0; i < terrainCount; i++) {
             const x = NumberGenerator.random(0, coordinateSize);
             const y = NumberGenerator.random(0, coordinateSize);
             const type = terrainTypes[NumberGenerator.random(0, terrainTypes.length - 1, true)];
-            const terrain = new Terrain(type, this.generateTerrainName(type), {x, y});
+            const size = NumberGenerator.random(1, 10, true);
+            const terrain = new Terrain(type, size, this.generateTerrainName(type), {x, y});
             terrains.push(terrain);
         }
         return terrains;
