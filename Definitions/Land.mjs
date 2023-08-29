@@ -9,4 +9,9 @@ export class Land {
         this.locations.push(location);
         return this;
     }
+
+    addLocations(locations) {
+        this.locations = this.locations.concat(locations);
+        return this;
+    }
 }

@@ -1,7 +1,26 @@
-import * as fs from "fs";
+import fs from "fs";
+
+function getFilesInDir(dir, extension) {
+    let results = [];
+    const list = fs.readdirSync(dir, { withFileTypes: true });
+
+    list.forEach(file => {
+        const fullPath = dir + file.name;
+
+        if (file.isDirectory()) {
+            const subDirFiles = getFilesInDir(fullPath + "/", extension);
+            results = results.concat(subDirFiles);
+        } else if (file.name.endsWith(extension)) {
+            results.push(fullPath);
+        }
+    });
+
+    return results;
+}
 
 const dir = "./";
-const files = fs.readdirSync(dir).filter(file => file.endsWith(".json"));
+const files = getFilesInDir(dir, ".json");
+console.log(files);
 
 console.log("Cleaning source files...");
 let done = 0;

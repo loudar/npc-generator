@@ -5,6 +5,7 @@ import {States} from "./States.mjs";
 import {Professions} from "../Professions.mjs";
 import {Actionable} from "../Extensions/Actionable.mjs";
 import {PropertyStore} from "../Extensions/PropertyStore.mjs";
+import {IdGenerator} from "../../Generators/IdGenerator.mjs";
 
 export class Character extends Actionable(PropertyStore) {
     constructor(name) {
@@ -14,6 +15,7 @@ export class Character extends Actionable(PropertyStore) {
         this.state = States.healthy;
         this.skills = [];
         this.profession = 'Nitwit';
+        this.id = IdGenerator.generateId();
         return this;
     }
 

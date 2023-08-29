@@ -1,0 +1,14 @@
+{
+    "entries": [
+        "island",
+        "mountain",
+        "river",
+        "valley",
+        "volcano",
+        "hills",
+        "swamp",
+        "desert",
+        "forest",
+        "cave"
+    ]
+}
