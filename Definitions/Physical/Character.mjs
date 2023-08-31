@@ -16,6 +16,7 @@ export class Character extends Actionable(PropertyStore) {
         this.skills = [];
         this.profession = 'Nitwit';
         this.id = IdGenerator.generateId();
+        this.buildBody();
         return this;
     }
 

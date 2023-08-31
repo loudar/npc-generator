@@ -11,12 +11,12 @@ class Message {
         return this;
     }
 
-    static fromString(json) {
+    static unpack(json) {
         const obj = JSON.parse(json);
         return new Message(obj.type, obj.data);
     }
 
-    toString() {
+    pack() {
         return JSON.stringify(this);
     }
 }

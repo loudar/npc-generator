@@ -6,7 +6,6 @@ export class PopulationGenerator {
         const startTime = new Date();
         const info = new Population();
         const people = [];
-        // TODO: maybe also generate some general info about culture, locations, etc.
         let percent = 0;
         for (let i = 0; i < info.population; i++) {
             const newPercent = Math.floor(i / info.population * 100);

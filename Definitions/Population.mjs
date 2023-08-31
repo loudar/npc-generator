@@ -10,9 +10,6 @@ export class Population {
         this.population = NumberGenerator.random(minPeople, maxPeople, true);
         this.populationGrowthRate = 0.01;
         this.educationRate = NumberGenerator.random(0.2, 0.95);
-        this.land = LandGenerator.generateLand();
-        this.language = LanguageGenerator.generateLanguage();
-        this.culture = CultureGenerator.generateCulture(this);
         return this;
     }
 }
