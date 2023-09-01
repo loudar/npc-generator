@@ -6,6 +6,11 @@ export class MapTile {
         this.texture = null;
         this.color = null;
         this.size = 10;
+        this.terrainId = null;
+    }
+
+    setTerrainId(id) {
+        this.terrainId = id;
     }
 
     setSize(size) {

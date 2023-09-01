@@ -42,13 +42,7 @@ export class RegionGenerator {
      */
     static generateBuildings(count, population) {
         const buildings = [];
-        let percent = 0;
         for (let i = 0; i < count; i++) {
-            const newPercent = Math.floor(i / count * 100);
-            if (newPercent > percent) {
-                percent = newPercent;
-                console.log(`GEN:BUIL_${percent}% (${i}/${count})`);
-            }
             buildings.push(BuildingGenerator.generateBuilding(population.educationRate));
         }
         return buildings;

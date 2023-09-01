@@ -30,7 +30,7 @@ export class LandGenerator {
 
     static generateTerrains(count) {
         const terrainTypes = SourceLoader.get("TerrainTypes");
-        const coordinateSize = 100;
+        const coordinateResolution = 100;
         const terrains = [];
         let percent = 0;
         for (let i = 0; i < count; i++) {
@@ -39,8 +39,8 @@ export class LandGenerator {
                 percent = newPercent;
                 console.log(`GEN:TERR_${percent}% (${i}/${count})`);
             }
-            const x = NumberGenerator.random(0, coordinateSize);
-            const y = NumberGenerator.random(0, coordinateSize);
+            const x = NumberGenerator.random(0, coordinateResolution, true);
+            const y = NumberGenerator.random(0, coordinateResolution, true);
             const type = terrainTypes[NumberGenerator.random(0, terrainTypes.length - 1, true)];
             const size = NumberGenerator.random(1, 5, true);
             const terrain = new Terrain(type, size, this.generateTerrainName(type), {x, y});
