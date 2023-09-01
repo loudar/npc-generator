@@ -49,15 +49,19 @@ export class MapGenerator {
 
     static expandTerrains(grid, terrains, coordinateResolution) {
         let percent = 0, iterations = 0;
-        while (this.gridHasEmptySpace(grid, coordinateResolution)
-            && iterations < coordinateResolution * coordinateResolution * 10) {
+        let excludedTerrains = [];
+        while (this.gridHasEmptySpace(grid, coordinateResolution)) {
             iterations++;
             const newPercent = Math.floor(this.getPercentFilled(grid, coordinateResolution) * 100);
-            if (newPercent > percent) {
+            if (newPercent > percent || iterations % 10000 === 0) {
                 percent = newPercent;
                 console.log(`GEN:MAP_${percent}% (${iterations})`);
             }
-            grid = this.expandTerrainsOnce(grid, terrains, coordinateResolution);
+            grid = this.expandTerrainsOnce(grid, terrains, excludedTerrains, coordinateResolution);
+            if (excludedTerrains.length === terrains.length) {
+                console.log(`GEN:MAP_100%`);
+                return grid;
+            }
         }
         console.log(`GEN:MAP_100%`);
         return grid;
@@ -75,10 +79,16 @@ export class MapGenerator {
         return filled / (coordinateResolution * coordinateResolution);
     }
 
-    static expandTerrainsOnce(grid, terrains, coordinateResolution) {
+    static expandTerrainsOnce(grid, terrains, excludedTerrains, coordinateResolution) {
+        let t = 0;
         for (let terrain of terrains) {
-            const adjacentTile = this.getAnyAdjacentEmptyTile(grid, terrain, coordinateResolution);
+            t++;
+            if (excludedTerrains.includes(terrain)) {
+                continue;
+            }
+            const adjacentTile = this.getAnyAdjacentEmptyTileNew(grid, terrain, coordinateResolution);
             if (adjacentTile === null) {
+                excludedTerrains.push(terrain);
                 continue;
             }
             grid[adjacentTile.x][adjacentTile.y] = this.createTile(terrain, adjacentTile);
@@ -86,31 +96,68 @@ export class MapGenerator {
         return grid;
     }
 
-    static getAnyAdjacentEmptyTile(grid, terrain, coordinateResolution) {
+    static getAnyAdjacentEmptyTileNew(grid, terrain, coordinateResolution) {
         let radius = 1;
         while (radius < coordinateResolution) {
-            for (let i = terrain.coordinates.x - radius; i <= terrain.coordinates.x + radius; i++) {
-                const listOfY = [];
-                for (let j = terrain.coordinates.y - radius; j <= terrain.coordinates.y + radius; j++) {
-                    listOfY.push(j);
+            const radiusStartTime = Date.now();
+            const circleResolution = radius * 8;
+            const circle = [];
+            for (let i = 0; i < circleResolution; i++) {
+                const angle = (i / circleResolution) * Math.PI * 2;
+                const x = Math.round(Math.cos(angle) * radius);
+                const y = Math.round(Math.sin(angle) * radius);
+                if (x === 0 && y === 0) {
+                    continue;
                 }
-                listOfY.sort(() => Math.random() - 0.5);
-                for (let j of listOfY) {
-                    if (i === terrain.coordinates.x - radius || i === terrain.coordinates.x + radius
-                        || j === terrain.coordinates.y - radius || j === terrain.coordinates.y + radius) {
-                        continue;
-                    }
-                    if (i >= 0 && i < coordinateResolution && j >= 0 && j < coordinateResolution
-                        && (i !== terrain.coordinates.x || j !== terrain.coordinates.y)
-                        && !this.tileIsFilled(grid, i, j))
-                    {
-                        return {x: i, y: j};
-                    }
-                }
+                circle.push({x, y});
             }
-            radius++;
+            // shuffle the list
+            circle.sort(() => Math.random() - 0.5);
+            // check each coordinate in the list
+            let filled = 0, iterations = 0;
+            for (let coordinate of circle) {
+                iterations++;
+                const x = terrain.coordinates.x + coordinate.x;
+                const y = terrain.coordinates.y + coordinate.y;
+                if (x < 0 || x >= coordinateResolution || y < 0 || y >= coordinateResolution) {
+                    filled++;
+                    continue;
+                }
+                if (this.tileHasSameTerrain(grid, x, y, terrain)) {
+                    filled++;
+                    continue;
+                }
+                if (this.isValidTile(grid, x, y, terrain, coordinateResolution)) {
+                    return { x, y };
+                }
+                filled++;
+            }
+            if (filled === circle.length) {
+                radius++;
+            }
+            const radiusEndTime = Date.now();
+            const radiusTimeDiff = radiusEndTime - radiusStartTime;
+            if (radiusTimeDiff > 100) {
+                console.log(`GEN:MAP:RADIUS:${radius} (${radiusTimeDiff}ms)`);
+            }
         }
         return null;
+    }
+
+    static isValidTile(grid, x, y, terrain, coordinateResolution) {
+        if (this.tileHasDifferentTerrain(grid, x, y, terrain)) {
+            return false;
+        }
+        return this.anySideTileIsSame(grid, x, y, coordinateResolution, terrain);
+
+    }
+
+    static anySideTileIsSame(grid, x, y, coordinateResolution, terrain) {
+        const topTile = y > 0 ? this.tileHasSameTerrain(grid, x, y - 1, terrain) : false;
+        const bottomTile = y < coordinateResolution - 1 ? this.tileHasSameTerrain(grid, x, y + 1, terrain) : false;
+        const leftTile = x > 0 ? this.tileHasSameTerrain(grid, x - 1, y, terrain) : false;
+        const rightTile = x < coordinateResolution - 1 ? this.tileHasSameTerrain(grid, x + 1, y, terrain) : false;
+        return topTile || bottomTile || leftTile || rightTile;
     }
 
     static tileIsFilled(grid, x, y) {
@@ -118,6 +165,14 @@ export class MapGenerator {
             return true;
         }
         return grid[x][y] !== null && grid[x][y] !== undefined;
+    }
+
+    static tileHasDifferentTerrain(grid, x, y, terrain) {
+        return grid[x][y] !== null && grid[x][y] !== undefined && grid[x][y].type !== terrain.type;
+    }
+
+    static tileHasSameTerrain(grid, x, y, terrain) {
+        return grid[x][y] !== null && grid[x][y] !== undefined && grid[x][y].type === terrain.type;
     }
 
     static gridHasEmptySpace(grid, coordinateResolution) {
