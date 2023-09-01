@@ -95,6 +95,10 @@ export class MapGenerator {
                 }
                 listOfY.sort(() => Math.random() - 0.5);
                 for (let j of listOfY) {
+                    if (i === terrain.coordinates.x - radius || i === terrain.coordinates.x + radius
+                        || j === terrain.coordinates.y - radius || j === terrain.coordinates.y + radius) {
+                        continue;
+                    }
                     if (i >= 0 && i < coordinateResolution && j >= 0 && j < coordinateResolution
                         && (i !== terrain.coordinates.x || j !== terrain.coordinates.y)
                         && (grid[i][j] === null || grid[i][j] === undefined)) {

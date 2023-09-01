@@ -9,14 +9,22 @@ const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
 
 const port = process.env.PORT || 3000;
-let world, runWhenWorldGenerated = [];
+let world, runWhenWorldGenerated = [], clients = [], WorldGenerator;
 WorldGeneratorModule.then((module) => {
-    world = module.WorldGenerator.generateWorld();
-    runWhenWorldGenerated.forEach((callback) => callback(world));
+    WorldGenerator = module.WorldGenerator;
+    world = WorldGenerator.generateWorld();
+    clients.forEach((client) => {
+        sendWorldToClient(client, world);
+    });
 });
 
+function sendWorldToClient(ws, world) {
+    ws.send(new Message.Message('worldResponse', world).pack());
+}
+
 wss.on('connection', (ws) => {
-    console.log(`Client connected`);
+    console.log(`Client ${ws} connected`);
+    clients.push(ws);
 
     ws.on('message', (message) => {
         console.log(`Received message: ${message}`);
@@ -46,7 +54,24 @@ wss.on('connection', (ws) => {
         ws.send(response.pack());
     });
 });
+wss.on('close', (ws) => {
+    console.log(`Client ${ws} disconnected`);
+    clients.splice(clients.indexOf(ws), 1);
+});
 
 server.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
+});
+
+const readline = require('readline');
+readline.emitKeypressEvents(process.stdin);
+process.stdin.setRawMode(true);
+process.stdin.on('keypress', (str, key) => {
+    if (key.data === 'r') {
+        console.log("Regenerating world...");
+        const world = WorldGenerator.generateWorld();
+        clients.forEach((client) => {
+            sendWorldToClient(client, world);
+        });
+    }
 });
