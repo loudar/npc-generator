@@ -30,7 +30,7 @@ export class LandGenerator {
 
     static generateTerrains(count) {
         const terrainTypes = SourceLoader.get("TerrainTypes");
-        const coordinateResolution = 100;
+        const coordinateResolution = 200;
         const terrains = [];
         let percent = 0;
         for (let i = 0; i < count; i++) {

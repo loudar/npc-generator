@@ -15,7 +15,7 @@ export class MapGenerator {
     };
 
     static generateMap(land) {
-        const coordinateResolution = 100;
+        const coordinateResolution = 200;
         let grid = this.initializeGrid(coordinateResolution);
         grid = this.fillGridWithLand(grid, land.terrains);
         console.log(`GEN:MAP_0%`);
