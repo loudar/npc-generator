@@ -1,4 +1,5 @@
 import {MapTile} from "../Definitions/MapTile.mjs";
+import {Config} from "../Config.mjs";
 
 export class MapGenerator {
     static colorMap = {
@@ -15,7 +16,7 @@ export class MapGenerator {
     };
 
     static generateMap(land) {
-        const coordinateResolution = 200;
+        const coordinateResolution = Config.coordinateResolution;
         let grid = this.initializeGrid(coordinateResolution);
         grid = this.fillGridWithLand(grid, land.terrains);
         console.log(`GEN:MAP_0%`);

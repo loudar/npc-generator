@@ -4,6 +4,7 @@ import {Land} from "../Definitions/Land.mjs";
 import {Terrain} from "../Definitions/Terrain.mjs";
 import {RegionGenerator} from "./RegionGenerator.mjs";
 import {DistributionSolver} from "./DistributionSolver.mjs";
+import {Config} from "../Config.mjs";
 
 export class LandGenerator {
     static generateName() {
@@ -43,7 +44,7 @@ export class LandGenerator {
     }
 
     static generateTerrains(count) {
-        const coordinateResolution = 200;
+        const coordinateResolution = Config.coordinateResolution;
         const terrains = [];
         let percent = 0;
         const typeDistribution = this.generateTypeDistribution();
