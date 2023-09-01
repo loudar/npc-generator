@@ -42,7 +42,7 @@ export class LandGenerator {
             const x = NumberGenerator.random(0, coordinateSize);
             const y = NumberGenerator.random(0, coordinateSize);
             const type = terrainTypes[NumberGenerator.random(0, terrainTypes.length - 1, true)];
-            const size = NumberGenerator.random(1, 10, true);
+            const size = NumberGenerator.random(1, 5, true);
             const terrain = new Terrain(type, size, this.generateTerrainName(type), {x, y});
             terrains.push(terrain);
         }
