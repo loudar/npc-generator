@@ -21,7 +21,7 @@ export class BackgroundGenerator {
     static generateProfession(character, population) {
         const possibleProfessions = character.getPossibleProfessions(Professions.getAll());
         if (possibleProfessions.length > 0) {
-            const profession = possibleProfessions[NumberGenerator.random(0, possibleProfessions.length - 1, true)];
+            const profession = possibleProfessions[NumberGenerator.random(0, possibleProfessions.length, true)];
             character.setProfession(profession);
         }
     }

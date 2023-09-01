@@ -23,8 +23,10 @@ function sendWorldToClient(ws, world) {
 }
 
 wss.on('connection', (ws) => {
-    console.log(`Client ${ws} connected`);
-    clients.push(ws);
+    const ip = ws._socket.remoteAddress;
+    const id = Math.random().toString(36).substr(2, 9);
+    console.log(`Client ${ip} / ${id} connected`);
+    clients.push({ ws, id });
 
     ws.on('message', (message) => {
         console.log(`Received message: ${message}`);
@@ -55,8 +57,10 @@ wss.on('connection', (ws) => {
     });
 });
 wss.on('close', (ws) => {
-    console.log(`Client ${ws} disconnected`);
-    clients.splice(clients.indexOf(ws), 1);
+    const ip = ws._socket.remoteAddress;
+    const id = clients.find((client) => client.ws === ws).id;
+    console.log(`Client ${ip} / ${id} disconnected`);
+    clients.splice(clients.findIndex((client) => client.ws === ws), 1);
 });
 
 server.listen(port, () => {

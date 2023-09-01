@@ -4,7 +4,7 @@ export class MapGenerator {
     static colorMap = {
         island: '#00ff00',
         mountain: '#ffdddd',
-        river: '#0000ff',
+        water: '#0000ff',
         valley: '#ff00ff',
         volcano: '#ff0000',
         hills: '#aaffaa',
@@ -49,7 +49,8 @@ export class MapGenerator {
 
     static expandTerrains(grid, terrains, coordinateResolution) {
         let percent = 0, iterations = 0;
-        while (this.gridHasEmptySpace(grid, coordinateResolution)) {
+        while (this.gridHasEmptySpace(grid, coordinateResolution)
+            && iterations < coordinateResolution * coordinateResolution * 10) {
             iterations++;
             const newPercent = Math.floor(this.getPercentFilled(grid, coordinateResolution) * 100);
             if (newPercent > percent) {
@@ -66,7 +67,7 @@ export class MapGenerator {
         let filled = 0;
         for (let i = 0; i < coordinateResolution; i++) {
             for (let j = 0; j < coordinateResolution; j++) {
-                if (grid[i][j] !== null && grid[i][j] !== undefined) {
+                if (this.tileIsFilled(grid, i, j)) {
                     filled++;
                 }
             }
@@ -101,7 +102,8 @@ export class MapGenerator {
                     }
                     if (i >= 0 && i < coordinateResolution && j >= 0 && j < coordinateResolution
                         && (i !== terrain.coordinates.x || j !== terrain.coordinates.y)
-                        && (grid[i][j] === null || grid[i][j] === undefined)) {
+                        && !this.tileIsFilled(grid, i, j))
+                    {
                         return {x: i, y: j};
                     }
                 }
@@ -111,10 +113,17 @@ export class MapGenerator {
         return null;
     }
 
+    static tileIsFilled(grid, x, y) {
+        if (x < 0 || x >= grid.length || y < 0 || y >= grid.length) {
+            return true;
+        }
+        return grid[x][y] !== null && grid[x][y] !== undefined;
+    }
+
     static gridHasEmptySpace(grid, coordinateResolution) {
         for (let i = 0; i < coordinateResolution; i++) {
             for (let j = 0; j < coordinateResolution; j++) {
-                if (grid[i][j] === null || grid[i][j] === undefined) {
+                if (!this.tileIsFilled(grid, i, j)) {
                     return true;
                 }
             }

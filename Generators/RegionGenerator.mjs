@@ -18,7 +18,7 @@ export class RegionGenerator {
 
     static generateName() {
         const names = SourceLoader.get("RegionNames");
-        return names[NumberGenerator.random(0, names.length - 1, true)];
+        return names[NumberGenerator.random(0, names.length, true)];
     }
 
     /**

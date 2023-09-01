@@ -7,7 +7,7 @@ import {RegionGenerator} from "./RegionGenerator.mjs";
 export class LandGenerator {
     static generateName() {
         const names = SourceLoader.get("LandNames");
-        return names[NumberGenerator.random(0, names.length - 1, true)];
+        return names[NumberGenerator.random(0, names.length, true)];
     }
 
     static generateLand(population) {
@@ -41,7 +41,7 @@ export class LandGenerator {
             }
             const x = NumberGenerator.random(0, coordinateResolution, true);
             const y = NumberGenerator.random(0, coordinateResolution, true);
-            const type = terrainTypes[NumberGenerator.random(0, terrainTypes.length - 1, true)];
+            const type = terrainTypes[NumberGenerator.random(0, terrainTypes.length, true)];
             const size = NumberGenerator.random(1, 5, true);
             const terrain = new Terrain(type, size, this.generateTerrainName(type), {x, y});
             terrains.push(terrain);
@@ -51,6 +51,6 @@ export class LandGenerator {
 
     static generateTerrainName(type) {
         const names = SourceLoader.get("TerrainNames/" + type);
-        return names[NumberGenerator.random(0, names.length - 1, true)];
+        return names[NumberGenerator.random(0, names.length, true)];
     }
 }
