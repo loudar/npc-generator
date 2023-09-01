@@ -5,7 +5,7 @@ export class MapGenerator {
         island: '#00ff00',
         mountain: '#ffdddd',
         water: '#0000ff',
-        valley: '#ff00ff',
+        valley: '#66aa33',
         volcano: '#ff0000',
         hills: '#aaffaa',
         swamp: '#00ffff',

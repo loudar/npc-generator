@@ -3,6 +3,7 @@ import {NumberGenerator} from "./NumberGenerator.mjs";
 import {Land} from "../Definitions/Land.mjs";
 import {Terrain} from "../Definitions/Terrain.mjs";
 import {RegionGenerator} from "./RegionGenerator.mjs";
+import {DistributionSolver} from "./DistributionSolver.mjs";
 
 export class LandGenerator {
     static generateName() {
@@ -28,11 +29,24 @@ export class LandGenerator {
         return regions;
     }
 
+    static generateTypeDistribution() {
+        return {
+            mountain: 0.1,
+            water: 0.1,
+            valley: 0.3,
+            volcano: 0.05,
+            hills: 0.1,
+            swamp: 0.05,
+            desert: 0.1,
+            forest: 0.4,
+        }
+    }
+
     static generateTerrains(count) {
-        const terrainTypes = SourceLoader.get("TerrainTypes");
         const coordinateResolution = 200;
         const terrains = [];
         let percent = 0;
+        const typeDistribution = this.generateTypeDistribution();
         for (let i = 0; i < count; i++) {
             const newPercent = Math.floor(i / count * 100);
             if (newPercent > percent) {
@@ -41,7 +55,7 @@ export class LandGenerator {
             }
             const x = NumberGenerator.random(0, coordinateResolution, true);
             const y = NumberGenerator.random(0, coordinateResolution, true);
-            const type = terrainTypes[NumberGenerator.random(0, terrainTypes.length, true)];
+            const type = DistributionSolver.chooseKeyByDistribution(typeDistribution);
             const size = NumberGenerator.random(1, 5, true);
             const terrain = new Terrain(type, size, this.generateTerrainName(type), {x, y});
             terrains.push(terrain);

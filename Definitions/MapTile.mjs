@@ -21,7 +21,7 @@ export class MapTile {
         this.color = color;
     }
 
-    addTexture(texture) {
+    setTexture(texture) {
         this.texture = texture;
     }
 }
