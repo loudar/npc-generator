@@ -1,9 +1,11 @@
+import {NumberGenerator} from "./NumberGenerator.mjs";
+
 export class DistributionSolver {
-    static chooseKeyByDistribution(distribution) {
-        const randomValue = Math.random();
+    static chooseKeyByDistribution(distribution, seed) {
+        const randomValue = NumberGenerator.getRandomNumber(seed);
         let accumulated = 0;
 
-        const keys = Object.keys(distribution).sort(() => Math.random() - 0.5);
+        const keys = Object.keys(distribution).sort(() => NumberGenerator.getRandomNumber(seed) - 0.5);
 
         for (let key of keys) {
             accumulated += distribution[key];

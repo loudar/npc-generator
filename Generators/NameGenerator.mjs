@@ -2,17 +2,17 @@ import {SourceLoader} from "./Sources/SourceLoader.mjs";
 import {NumberGenerator} from "./NumberGenerator.mjs";
 
 export class NameGenerator {
-    static generateName() {
-        return this.generateFirstName() + " " + this.generateLastName();
+    static generateName(seed) {
+        return this.generateFirstName(seed) + " " + this.generateLastName(seed);
     }
 
-    static generateFirstName() {
+    static generateFirstName(seed) {
         const names = SourceLoader.get("FirstNames");
-        return names[NumberGenerator.random(0, names.length, true)];
+        return names[NumberGenerator.random(0, names.length, seed, true)];
     }
 
-    static generateLastName() {
+    static generateLastName(seed) {
         const names = SourceLoader.get("LastNames");
-        return names[NumberGenerator.random(0, names.length, true)];
+        return names[NumberGenerator.random(0, names.length, seed, true)];
     }
 }

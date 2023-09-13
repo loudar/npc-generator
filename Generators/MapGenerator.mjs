@@ -1,5 +1,6 @@
 import {MapTile} from "../Definitions/MapTile.mjs";
 import {Config} from "../Config.mjs";
+import {BuildingGenerator} from "./BuildingGenerator.mjs";
 
 export class MapGenerator {
     static colorMap = {
@@ -15,7 +16,7 @@ export class MapGenerator {
         cave: '#000000',
     };
 
-    static generateMap(land) {
+    static generateMap(land, population) {
         const coordinateResolution = Config.coordinateResolution;
         let grid = this.initializeGrid(coordinateResolution);
         grid = this.fillGridWithLand(grid, land.terrains);
@@ -30,7 +31,12 @@ export class MapGenerator {
                 }
             }
         }
-        return nonNullTiles;
+        this.generateBuildings(nonNullTiles, population);
+        return {
+            resolution: coordinateResolution,
+            tiles: nonNullTiles,
+            buildings
+        };
     }
 
     static initializeGrid(coordinateResolution) {
@@ -201,5 +207,17 @@ export class MapGenerator {
 
     static getRandomColor() {
         return "#" + Math.floor(Math.random()*16777215).toString(16);
+    }
+
+    static generateBuildings(nonNullTiles, ) {
+        const buildings = [];
+        for (let tile of nonNullTiles) {
+            const buildingChance = 0.01;
+            if (Math.random() < buildingChance) {
+                const building = BuildingGenerator.generateBuilding()
+                buildings.push(building);
+            }
+        }
+        return buildings;
     }
 }

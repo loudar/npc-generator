@@ -5,10 +5,11 @@ import {Language} from "../Definitions/Language.mjs";
 import {DistributionSolver} from "./DistributionSolver.mjs";
 
 export class LanguageGenerator {
-    static generateLanguage() {
-        const languageComplexity = NumberGenerator.randomWithBias(0, 1, 0.5, 0.5);
-        const characterDistribution = this.generateCharacterDistribution(languageComplexity);
-        const wordList = this.generateWords(characterDistribution, languageComplexity, 5000 + Math.floor(languageComplexity * 500 * 100));
+    static generateLanguage(seed) {
+        const languageComplexity = NumberGenerator.randomWithBias(0, 1, seed, 0.5, 0.5);
+        const characterDistribution = this.generateCharacterDistribution(languageComplexity, seed);
+        const wordCount = 5000 + Math.floor(languageComplexity * 500 * 100);
+        const wordList = this.generateWords(characterDistribution, languageComplexity, wordCount, seed);
         const typeDistribution = this.generateTypeDistribution();
         const words = this.categorizeWords(wordList, typeDistribution);
         return new Language(characterDistribution, languageComplexity, words);
@@ -32,7 +33,7 @@ export class LanguageGenerator {
         return categorizedWords;
     }
 
-    static generateWords(characterDistribution, languageComplexity, wordCount) {
+    static generateWords(characterDistribution, languageComplexity, wordCount, seed) {
         const words = [];
         let percent = 0;
         for (let i = 0; words.length < wordCount; i++) {
@@ -41,7 +42,7 @@ export class LanguageGenerator {
                 percent = newPercent;
                 console.log(`GEN:LANG_${percent}% (${words.length + 1}/${wordCount})`);
             }
-            const newWord = WordGenerator.generateWord(characterDistribution, languageComplexity);
+            const newWord = WordGenerator.generateWord(characterDistribution, languageComplexity, seed);
             if (!words.includes(newWord)) {
                 words.push(newWord);
             }
@@ -49,14 +50,14 @@ export class LanguageGenerator {
         return words;
     }
 
-    static generateCharacterDistribution(languageComplexity) {
+    static generateCharacterDistribution(languageComplexity, seed) {
         const characters = "abcdefghijklmnopqrstuvwxyz";
-        const distribution = NumberGenerator.antiExponentialDistribution(characters.length, 2 - languageComplexity, 0.02 + (languageComplexity * 0.1));
-        return this.assignDistributionToCharacters(characters, distribution);
+        const distribution = NumberGenerator.antiExponentialDistribution(characters.length, 2 - languageComplexity, 0.02 + (languageComplexity * 0.1), seed);
+        return this.assignDistributionToCharacters(characters, distribution, seed);
     }
 
-    static assignDistributionToCharacters(characters, distribution) {
-        const shuffledDistribution = Numbers.shuffleArray([...distribution]);
+    static assignDistributionToCharacters(characters, distribution, seed) {
+        const shuffledDistribution = Numbers.shuffleArray([...distribution], seed);
         let output = {};
         for (let i = 0; i < characters.length; i++) {
             output[characters[i]] = shuffledDistribution[i];

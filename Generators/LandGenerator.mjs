@@ -7,25 +7,25 @@ import {DistributionSolver} from "./DistributionSolver.mjs";
 import {Config} from "../Config.mjs";
 
 export class LandGenerator {
-    static generateName() {
+    static generateName(seed) {
         const names = SourceLoader.get("LandNames");
-        return names[NumberGenerator.random(0, names.length, true)];
+        return names[NumberGenerator.random(0, names.length, seed, true)];
     }
 
-    static generateLand(population) {
-        const land = new Land(this.generateName());
-        const regionCount = NumberGenerator.random(1, 10, true);
-        land.addRegions(this.generateRegions(population, regionCount));
-        const terrainCount = NumberGenerator.random(10, 100, true);
-        land.addTerrains(this.generateTerrains(terrainCount));
+    static generateLand(population, seed) {
+        const land = new Land(this.generateName(seed));
+        const regionCount = NumberGenerator.random(1, 10, seed, true);
+        land.addRegions(this.generateRegions(population, regionCount, seed));
+        const terrainCount = NumberGenerator.random(10, 100, seed, true);
+        land.addTerrains(this.generateTerrains(terrainCount, seed));
         return land;
     }
 
-    static generateRegions(population, regionCount) {
+    static generateRegions(population, regionCount, seed) {
         const regions = [];
         for (let i = 0; i < regionCount; i++) {
-            const size = NumberGenerator.random(1, 10, true);
-            regions.push(RegionGenerator.generateRegion(population, size));
+            const size = NumberGenerator.random(1, 10, seed, true);
+            regions.push(RegionGenerator.generateRegion(population, size, seed));
         }
         return regions;
     }
@@ -43,7 +43,7 @@ export class LandGenerator {
         }
     }
 
-    static generateTerrains(count) {
+    static generateTerrains(count, seed) {
         const coordinateResolution = Config.coordinateResolution;
         const terrains = [];
         let percent = 0;
@@ -54,18 +54,18 @@ export class LandGenerator {
                 percent = newPercent;
                 console.log(`GEN:TERR_${percent}% (${i}/${count})`);
             }
-            const x = NumberGenerator.random(0, coordinateResolution, true);
-            const y = NumberGenerator.random(0, coordinateResolution, true);
+            const x = NumberGenerator.random(0, coordinateResolution, seed, true);
+            const y = NumberGenerator.random(0, coordinateResolution, seed, true);
             const type = DistributionSolver.chooseKeyByDistribution(typeDistribution);
-            const size = NumberGenerator.random(1, 5, true);
-            const terrain = new Terrain(type, size, this.generateTerrainName(type), {x, y});
+            const size = NumberGenerator.random(1, 5, seed, true);
+            const terrain = new Terrain(type, size, this.generateTerrainName(type, seed), {x, y});
             terrains.push(terrain);
         }
         return terrains;
     }
 
-    static generateTerrainName(type) {
+    static generateTerrainName(type, seed) {
         const names = SourceLoader.get("TerrainNames/" + type);
-        return names[NumberGenerator.random(0, names.length, true)];
+        return names[NumberGenerator.random(0, names.length, seed, true)];
     }
 }

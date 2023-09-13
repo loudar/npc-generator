@@ -2,7 +2,7 @@ import {Population} from "../Definitions/Population.mjs";
 import {CharacterGenerator} from "./CharacterGenerator.mjs";
 
 export class PopulationGenerator {
-    static generatePopulation() {
+    static generatePopulation(seed) {
         const startTime = new Date();
         const info = new Population();
         const people = [];
@@ -13,7 +13,7 @@ export class PopulationGenerator {
                 percent = newPercent;
                 console.log(`GEN:POPU_${percent}% (${i}/${info.population})`);
             }
-            const character = CharacterGenerator.generateCharacter(info);
+            const character = CharacterGenerator.generateCharacter(info, seed);
             people.push(character);
         }
         const endTime = new Date();

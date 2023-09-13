@@ -5,10 +5,10 @@ import {Rooms} from "../Definitions/Rooms.mjs";
 import {Maps} from "../Helpers/Maps.mjs";
 
 export class BuildingGenerator {
-    static generateBuilding(educationRate) {
-        const buildingSize = NumberGenerator.randomWithBias(1, 3, 1, 0.5);
+    static generateBuilding(educationRate, seed) {
+        const buildingSize = NumberGenerator.randomWithBias(1, 3, seed, 1, 0.5);
         const building = new Building(this.generateBuildingType(educationRate), buildingSize);
-        const rooms = this.generateRooms(building, buildingSize);
+        const rooms = this.generateRooms(building, buildingSize, seed);
         building.addRooms(rooms);
         return building;
     }
@@ -18,9 +18,9 @@ export class BuildingGenerator {
         return DistributionSolver.chooseKeyByDistribution(distribution);
     }
 
-    static generateRooms(building, buildingSize = 1) {
+    static generateRooms(building, buildingSize = 1, seed) {
         const roomInfo = this.generateRoomDistribution(building.type, building.educationRate);
-        const optionalRoomCount = NumberGenerator.random(0, Object.keys(roomInfo.optional).length * buildingSize, true);
+        const optionalRoomCount = NumberGenerator.random(0, Object.keys(roomInfo.optional).length * buildingSize, seed, true);
         let optionalRooms = [];
         const optionalDistribution = Maps.transformMap(roomInfo.optional, "type");
         while (optionalRooms.length < optionalRoomCount) {

@@ -16,8 +16,8 @@ console.log("Professions generated:", professions.length);
 const language = "en";
 
 const info = new Population();
-const char1 = CharacterGenerator.generateCharacter(info);
-const char2 = CharacterGenerator.generateCharacter(info);
+const char1 = CharacterGenerator.generateCharacter(info, null);
+const char2 = CharacterGenerator.generateCharacter(info, null);
 
 const bodypart = char2.getBodypart("nose");
 const result = bodypart.act("break");

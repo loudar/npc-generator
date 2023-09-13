@@ -7,28 +7,30 @@ export class RegionGenerator {
      * Generates a region with a name and locations.
      * @param population {Population}
      * @param size {number} The size of the region.
+     * @param seed {number} The seed to use for random generation.
      * @returns {{name: string, locations: {buildings: Array<Building>}}} A region with a name and locations.
      */
-    static generateRegion(population, size) {
+    static generateRegion(population, size, seed) {
         return {
-            name: this.generateName(),
-            locations: this.generateLocations(population, size)
+            name: this.generateName(seed),
+            locations: this.generateLocations(population, size, seed)
         };
     }
 
-    static generateName() {
+    static generateName(seed) {
         const names = SourceLoader.get("RegionNames");
-        return names[NumberGenerator.random(0, names.length, true)];
+        return names[NumberGenerator.random(0, names.length, seed, true)];
     }
 
     /**
      * Generates locations for a region.
      * @param population {Population}
      * @param size {number} The size of the region.
+     * @param seed
      * @returns {{buildings: Array<Building>}} Locations for a region.
      */
-    static generateLocations(population, size) {
-        const buildingCount = NumberGenerator.random(10 * size, 100 * size, true);
+    static generateLocations(population, size, seed) {
+        const buildingCount = NumberGenerator.random(10 * size, 100 * size, seed, true);
         return {
             buildings: this.generateBuildings(buildingCount, population)
         };

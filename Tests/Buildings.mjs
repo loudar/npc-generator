@@ -1,7 +1,7 @@
 import {BuildingGenerator} from "../Generators/BuildingGenerator.mjs";
 import {NumberGenerator} from "../Generators/NumberGenerator.mjs";
 
-const educationRate = NumberGenerator.random(0.2, 0.95);
+const educationRate = NumberGenerator.random(0.2, 0.95, null);
 let buildings = [];
 const count = 100;
 for (let i = 0; i < count; i++) {

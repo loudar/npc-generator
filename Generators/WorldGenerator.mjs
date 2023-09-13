@@ -5,15 +5,15 @@ import {CultureGenerator} from "./CultureGenerator.mjs";
 import {MapGenerator} from "./MapGenerator.mjs";
 
 export class WorldGenerator {
-    static generateWorld() {
+    static generateWorld(seed) {
         console.log("GEN:WORLD:START");
         const population = PopulationGenerator.generatePopulation();
-        const land = LandGenerator.generateLand(population);
+        const land = LandGenerator.generateLand(population, seed);
         const world = {
             population,
             land,
-            map: MapGenerator.generateMap(land),
-            language: LanguageGenerator.generateLanguage(),
+            map: MapGenerator.generateMap(land, population),
+            language: LanguageGenerator.generateLanguage(seed),
             culture: CultureGenerator.generateCulture(population),
         };
         console.log("GEN:WORLD:END");
