@@ -1,4 +1,4 @@
-class Message {
+export class Message {
     /**
      * Creates a new Message object
      * @param type {string}
@@ -19,8 +19,4 @@ class Message {
     pack() {
         return JSON.stringify(this);
     }
-}
-
-module.exports = {
-    Message
 }

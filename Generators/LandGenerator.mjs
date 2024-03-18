@@ -12,18 +12,18 @@ export class LandGenerator {
         return names[NumberGenerator.random(0, names.length, seed, true)];
     }
 
-    static generateLand(population, seed) {
+    static generateLand(setProgress, population, seed) {
         const land = new Land(this.generateName(seed));
         const regionCount = NumberGenerator.random(1, 10, seed, true);
-        land.addRegions(this.generateRegions(population, regionCount, seed));
+        land.addRegions(this.generateRegions(setProgress, population, regionCount, seed));
         const terrainCount = NumberGenerator.random(10, 100, seed, true);
-        land.addTerrains(this.generateTerrains(terrainCount, seed));
+        land.addTerrains(this.generateTerrains(setProgress, terrainCount, seed));
         console.log(`REGION:COUNT:${regionCount}`);
         console.log(`TERRAIN:COUNT:${terrainCount}`);
         return land;
     }
 
-    static generateRegions(population, regionCount, seed) {
+    static generateRegions(setProgress, population, regionCount, seed) {
         const regions = [];
         for (let i = 0; i < regionCount; i++) {
             const size = NumberGenerator.random(1, 10, seed, true);
@@ -45,7 +45,7 @@ export class LandGenerator {
         }
     }
 
-    static generateTerrains(count, seed) {
+    static generateTerrains(setProgress, count, seed) {
         const coordinateResolution = Config.coordinateResolution;
         const terrains = [];
         let percent = 0;
@@ -55,6 +55,7 @@ export class LandGenerator {
             if (newPercent > percent) {
                 percent = newPercent;
                 console.log(`GEN:TERR_${percent}% (${i}/${count})`);
+                setProgress("terrains", percent);
             }
             const x = NumberGenerator.random(0, coordinateResolution, seed, true);
             const y = NumberGenerator.random(0, coordinateResolution, seed, true);

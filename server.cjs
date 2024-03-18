@@ -1,25 +1,33 @@
 const express = require('express');
 const http = require('http');
 const WebSocket = require('ws');
-const Message = require('./Message.cjs');
 const WorldGeneratorModule = import("./Generators/WorldGenerator.mjs");
+import {Message} from "./Message.mjs";
 
 const app = express();
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
 
 const port = process.env.PORT || 3000;
-let world, runWhenWorldGenerated = [], clients = [], WorldGenerator;
+let world, clients = [], WorldGenerator;
+const setProgress = (type, progress) => {
+    clients.forEach((client) => {
+        client.ws.send(new Message('progress', {
+            type,
+            progress
+        }).pack());
+    });
+}
 WorldGeneratorModule.then((module) => {
     WorldGenerator = module.WorldGenerator;
-    world = WorldGenerator.generateWorld();
+    world = WorldGenerator.generateWorld(setProgress);
     clients.forEach((client) => {
         sendWorldToClient(client, world);
     });
 });
 
 function sendWorldToClient(ws, world) {
-    ws.send(new Message.Message('worldResponse', world).pack());
+    ws.send(new Message('worldResponse', world).pack());
 }
 
 wss.on('connection', (ws) => {
@@ -30,26 +38,28 @@ wss.on('connection', (ws) => {
 
     ws.on('message', (message) => {
         console.log(`Received message: ${message}`);
-        const clientMessage = Message.Message.unpack(message);
+        const clientMessage = Message.unpack(message);
 
         let response;
         switch (clientMessage.type) {
             case 'greeting':
-                response = new Message.Message('response', `Hello, ${clientMessage.data}!`);
+                response = new Message('response', `Hello, ${clientMessage.data}!`);
                 break;
             case 'worldRequest':
                 if (!world) {
-                    response = new Message.Message('error', 'World is not generated yet');
-                    runWhenWorldGenerated.push((world) => {
-                        response = new Message.Message('worldResponse', world);
-                        ws.send(response.pack());
-                    });
+                    response = new Message('error', 'World is not generated yet');
                     break;
                 }
-                response = new Message.Message('worldResponse', world);
+                response = new Message('worldResponse', world);
+                break;
+            case 'generateWorld':
+                world = WorldGenerator.generateWorld(setProgress);
+                clients.forEach((client) => {
+                    sendWorldToClient(client, world);
+                });
                 break;
             default:
-                response = new Message.Message('error', 'Unknown message type');
+                response = new Message('error', 'Unknown message type');
                 break;
         }
 
@@ -65,17 +75,4 @@ wss.on('close', (ws) => {
 
 server.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
-});
-
-const readline = require('readline');
-readline.emitKeypressEvents(process.stdin);
-process.stdin.setRawMode(true);
-process.stdin.on('keypress', (str, key) => {
-    if (key.data === 'r') {
-        console.log("Regenerating world...");
-        const world = WorldGenerator.generateWorld();
-        clients.forEach((client) => {
-            sendWorldToClient(client, world);
-        });
-    }
 });

@@ -5,11 +5,11 @@ import {Language} from "../Definitions/Language.mjs";
 import {DistributionSolver} from "./DistributionSolver.mjs";
 
 export class LanguageGenerator {
-    static generateLanguage(seed) {
+    static generateLanguage(setProgress, seed) {
         const languageComplexity = NumberGenerator.randomWithBias(0, 1, seed, 0.5, 0.5);
         const characterDistribution = this.generateCharacterDistribution(languageComplexity, seed);
         const wordCount = 5000 + Math.floor(languageComplexity * 500 * 100);
-        const wordList = this.generateWords(characterDistribution, languageComplexity, wordCount, seed);
+        const wordList = this.generateWords(setProgress, characterDistribution, languageComplexity, wordCount, seed);
         const typeDistribution = this.generateTypeDistribution();
         const words = this.categorizeWords(wordList, typeDistribution);
         return new Language(characterDistribution, languageComplexity, words);
@@ -33,7 +33,7 @@ export class LanguageGenerator {
         return categorizedWords;
     }
 
-    static generateWords(characterDistribution, languageComplexity, wordCount, seed) {
+    static generateWords(setProgress, characterDistribution, languageComplexity, wordCount, seed) {
         const words = [];
         let percent = 0;
         for (let i = 0; words.length < wordCount; i++) {
@@ -41,6 +41,7 @@ export class LanguageGenerator {
             if (newPercent > percent) {
                 percent = newPercent;
                 console.log(`GEN:LANG_${percent}% (${words.length + 1}/${wordCount})`);
+                setProgress("language", percent);
             }
             const newWord = WordGenerator.generateWord(characterDistribution, languageComplexity, seed);
             if (!words.includes(newWord)) {

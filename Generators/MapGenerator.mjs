@@ -16,11 +16,11 @@ export class MapGenerator {
         cave: '#000000',
     };
 
-    static generateMap(land, population) {
+    static generateMap(setProgress, land, population) {
         const coordinateResolution = Config.coordinateResolution;
         let grid = this.initializeGrid(coordinateResolution);
         grid = this.fillGridWithLand(grid, land.terrains);
-        grid = this.expandTerrains(grid, land.terrains, coordinateResolution);
+        grid = this.expandTerrains(setProgress, grid, land.terrains, coordinateResolution);
 
         let nonNullTiles = [];
         for (let i = 0; i < grid.length; i++) {
@@ -53,7 +53,7 @@ export class MapGenerator {
         return grid;
     }
 
-    static expandTerrains(grid, terrains, coordinateResolution) {
+    static expandTerrains(setProgress, grid, terrains, coordinateResolution) {
         console.log(`GEN:MAP_0%`);
         let percent = 0, iterations = 0;
         let excludedTerrains = [];
@@ -63,10 +63,11 @@ export class MapGenerator {
             if (newPercent > percent || iterations % 10000 === 0) {
                 percent = newPercent;
                 console.log(`GEN:MAP_${percent}% (${iterations})`);
+                setProgress("map", percent);
             }
             grid = this.expandTerrainsOnce(grid, terrains, excludedTerrains, coordinateResolution);
             if (excludedTerrains.length === terrains.length) {
-                console.log(`GEN:MAP_100%`);
+                setProgress("map", 100);
                 return grid;
             }
         }
