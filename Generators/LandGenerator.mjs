@@ -45,11 +45,25 @@ export class LandGenerator {
         }
     }
 
+    static generateTerrainHeightDistribution() {
+        return {
+            water: 0,
+            mountain: 1,
+            volcano: 1,
+            hills: 0.5,
+            valley: 0.2,
+            forest: 0.3,
+            swamp: 0.05,
+            desert: 0.1,
+        }
+    }
+
     static generateTerrains(setProgress, count, seed) {
         const coordinateResolution = Config.coordinateResolution;
         const terrains = [];
         let percent = 0;
         const typeDistribution = this.generateTypeDistribution();
+        const heightDistribution = this.generateTerrainHeightDistribution();
         for (let i = 0; i < count; i++) {
             const newPercent = Math.floor(i / count * 100);
             if (newPercent > percent) {
@@ -61,7 +75,7 @@ export class LandGenerator {
             const y = NumberGenerator.random(0, coordinateResolution, seed, true);
             const type = DistributionSolver.chooseKeyByDistribution(typeDistribution);
             const size = NumberGenerator.random(1, 5, seed, true);
-            const terrain = new Terrain(type, size, this.generateTerrainName(type, seed), {x, y});
+            const terrain = new Terrain(type, size, this.generateTerrainName(type, seed), {x, y}, heightDistribution[type]);
             terrains.push(terrain);
         }
         return terrains;

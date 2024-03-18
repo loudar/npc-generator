@@ -1,6 +1,7 @@
 import {MapTile} from "../Definitions/MapTile.mjs";
 import {Config} from "../Config.mjs";
 import {BuildingGenerator} from "./BuildingGenerator.mjs";
+import {NumberGenerator} from "./NumberGenerator.mjs";
 
 export class MapGenerator {
     static colorMap = {
@@ -57,6 +58,7 @@ export class MapGenerator {
         console.log(`GEN:MAP_0%`);
         let percent = 0, iterations = 0;
         let excludedTerrains = [];
+        const previousTiles = [];
         while (this.gridHasEmptySpace(grid, coordinateResolution)) {
             iterations++;
             const newPercent = Math.floor(this.getPercentFilled(grid, coordinateResolution) * 100);
@@ -65,7 +67,7 @@ export class MapGenerator {
                 console.log(`GEN:MAP_${percent}% (${iterations})`);
                 setProgress("map", percent);
             }
-            grid = this.expandTerrainsOnce(grid, terrains, excludedTerrains, coordinateResolution);
+            grid = this.expandTerrainsOnce(grid, terrains, excludedTerrains, previousTiles, coordinateResolution);
             if (excludedTerrains.length === terrains.length) {
                 setProgress("map", 100);
                 return grid;
@@ -87,19 +89,24 @@ export class MapGenerator {
         return filled / (coordinateResolution * coordinateResolution);
     }
 
-    static expandTerrainsOnce(grid, terrains, excludedTerrains, coordinateResolution) {
+    static expandTerrainsOnce(grid, terrains, excludedTerrains, previousTiles, coordinateResolution) {
         let t = 0;
         for (let terrain of terrains) {
             t++;
             if (excludedTerrains.includes(terrain)) {
                 continue;
             }
-            const adjacentTile = this.getAnyAdjacentEmptyTileNew(grid, terrain, coordinateResolution);
-            if (adjacentTile === null) {
+            if (!previousTiles.some((tile) => tile.terrain.type === terrain.type)) {
+                previousTiles.push({ terrain, tile: null });
+            }
+            const previousTile = previousTiles.find((tile) => tile.terrain.type === terrain.type).tile;
+            const tileToFill = this.getAnyAdjacentEmptyTileNew(grid, terrain, coordinateResolution);
+            if (tileToFill === null) {
                 excludedTerrains.push(terrain);
                 continue;
             }
-            grid[adjacentTile.x][adjacentTile.y] = this.createTile(terrain, adjacentTile);
+            grid[tileToFill.x][tileToFill.y] = this.createTile(terrain, tileToFill, previousTile);
+            previousTiles.find((tile) => tile.terrain.type === terrain.type).tile = grid[tileToFill.x][tileToFill.y];
         }
         return grid;
     }
@@ -194,11 +201,18 @@ export class MapGenerator {
         return false;
     }
 
-    static createTile(terrain, coordinates){
+    static createTile(terrain, coordinates, previousTile = null){
         const mapTile = new MapTile(coordinates.x, coordinates.y, terrain.type);
         mapTile.setColor(this.getTerrainColor(terrain.type));
         mapTile.setSize(1);
-        mapTile.terrainId = terrain.id;
+        mapTile.setTerrainId(terrain.id);
+        const scalingFactor = .01;
+        const expScalingFactor = scalingFactor * scalingFactor;
+        if (previousTile !== null) {
+            mapTile.setHeight(previousTile.height - NumberGenerator.random(-terrain.height * expScalingFactor, terrain.height * scalingFactor, undefined, false));
+        } else {
+            mapTile.setHeight(terrain.height);
+        }
         return mapTile;
     }
 

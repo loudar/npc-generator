@@ -7,6 +7,7 @@ export class MapTile {
         this.color = null;
         this.size = 10;
         this.terrainId = null;
+        this.height = 0;
     }
 
     setTerrainId(id) {
@@ -23,5 +24,9 @@ export class MapTile {
 
     setTexture(texture) {
         this.texture = texture;
+    }
+
+    setHeight(height) {
+        this.height = height;
     }
 }
