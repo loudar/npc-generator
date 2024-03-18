@@ -1,5 +1,5 @@
 export class Config {
     static get coordinateResolution() {
-        return 200;
+        return 100;
     }
 }

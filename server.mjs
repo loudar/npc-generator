@@ -1,15 +1,14 @@
-const express = require('express');
-const http = require('http');
-const WebSocket = require('ws');
-const WorldGeneratorModule = import("./Generators/WorldGenerator.mjs");
-import {Message} from "./Message.mjs";
+import express from 'express';
+import http from 'http';
+import { WebSocketServer } from 'ws';
+import { Message } from "./Message.mjs";
+import { WorldGenerator } from "./Generators/WorldGenerator.mjs";
+let world, clients = [];
 
 const app = express();
 const server = http.createServer(app);
-const wss = new WebSocket.Server({ server });
-
-const port = process.env.PORT || 3000;
-let world, clients = [], WorldGenerator;
+const wss = new WebSocketServer({ server });
+const port = process.env.PORT || 3456;
 const setProgress = (type, progress) => {
     clients.forEach((client) => {
         client.ws.send(new Message('progress', {
@@ -18,13 +17,6 @@ const setProgress = (type, progress) => {
         }).pack());
     });
 }
-WorldGeneratorModule.then((module) => {
-    WorldGenerator = module.WorldGenerator;
-    world = WorldGenerator.generateWorld(setProgress);
-    clients.forEach((client) => {
-        sendWorldToClient(client, world);
-    });
-});
 
 function sendWorldToClient(ws, world) {
     ws.send(new Message('worldResponse', world).pack());
@@ -54,9 +46,7 @@ wss.on('connection', (ws) => {
                 break;
             case 'generateWorld':
                 world = WorldGenerator.generateWorld(setProgress);
-                clients.forEach((client) => {
-                    sendWorldToClient(client, world);
-                });
+                response = new Message('worldResponse', world);
                 break;
             default:
                 response = new Message('error', 'Unknown message type');
