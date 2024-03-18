@@ -20,7 +20,6 @@ export class MapGenerator {
         const coordinateResolution = Config.coordinateResolution;
         let grid = this.initializeGrid(coordinateResolution);
         grid = this.fillGridWithLand(grid, land.terrains);
-        console.log(`GEN:MAP_0%`);
         grid = this.expandTerrains(grid, land.terrains, coordinateResolution);
 
         let nonNullTiles = [];
@@ -55,6 +54,7 @@ export class MapGenerator {
     }
 
     static expandTerrains(grid, terrains, coordinateResolution) {
+        console.log(`GEN:MAP_0%`);
         let percent = 0, iterations = 0;
         let excludedTerrains = [];
         while (this.gridHasEmptySpace(grid, coordinateResolution)) {
