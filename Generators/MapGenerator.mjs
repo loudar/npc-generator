@@ -31,7 +31,7 @@ export class MapGenerator {
                 }
             }
         }
-        this.generateBuildings(nonNullTiles, population);
+        const buildings = this.generateBuildings(nonNullTiles, population);
         return {
             resolution: coordinateResolution,
             tiles: nonNullTiles,

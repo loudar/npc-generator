@@ -18,6 +18,8 @@ export class LandGenerator {
         land.addRegions(this.generateRegions(population, regionCount, seed));
         const terrainCount = NumberGenerator.random(10, 100, seed, true);
         land.addTerrains(this.generateTerrains(terrainCount, seed));
+        console.log(`REGION:COUNT:${regionCount}`);
+        console.log(`TERRAIN:COUNT:${terrainCount}`);
         return land;
     }
 
