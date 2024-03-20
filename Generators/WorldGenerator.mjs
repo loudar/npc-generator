@@ -12,7 +12,7 @@ export class WorldGenerator {
         const world = {
             population,
             land,
-            map: MapGenerator.generateMap(setProgress, land, population),
+            map: MapGenerator.generateMap(setProgress, land, population, seed),
             language: LanguageGenerator.generateLanguage(setProgress, seed),
             culture: CultureGenerator.generateCulture(population),
         };

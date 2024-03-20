@@ -17,7 +17,7 @@ export class MapGenerator {
         cave: '#000000',
     };
 
-    static generateMap(setProgress, land, population) {
+    static generateMap(setProgress, land, population, seed) {
         const coordinateResolution = Config.coordinateResolution;
         let grid = this.initializeGrid(coordinateResolution);
         grid = this.fillGridWithLand(grid, land.terrains);
@@ -31,7 +31,7 @@ export class MapGenerator {
                 }
             }
         }
-        const buildings = this.generateBuildings(nonNullTiles, population);
+        const buildings = this.generateBuildings(nonNullTiles, coordinateResolution, population, seed);
         return {
             resolution: coordinateResolution,
             tiles: nonNullTiles,
@@ -224,15 +224,46 @@ export class MapGenerator {
         return "#" + Math.floor(Math.random()*16777215).toString(16);
     }
 
-    static generateBuildings(nonNullTiles, ) {
+    /**
+     *
+     * @param nonNullTiles {MapTile[]}
+     * @param resolution
+     * @param population {Population}
+     * @param seed
+     * @returns {*[]}
+     */
+    static generateBuildings(nonNullTiles, resolution, population, seed) {
         const buildings = [];
-        for (let tile of nonNullTiles) {
-            const buildingChance = 0.01;
-            if (Math.random() < buildingChance) {
-                const building = BuildingGenerator.generateBuilding()
+        const tileGroups = MapGenerator.generateTileGroups(nonNullTiles, resolution, seed);
+
+        for (const group of tileGroups) {
+            for (const tile of group) {
+                const building = BuildingGenerator.generateBuilding(tile, population.educationRate, seed);
                 buildings.push(building);
             }
         }
         return buildings;
+    }
+
+    static generateTileGroups(tiles, resolution, seed) {
+        const randomTile = tiles[Math.floor(Math.random() * tiles.length)];
+        const groups = [];
+        const groupCount = NumberGenerator.randomWithBias(1, resolution * .25, seed, 0.5);
+        for (let i = 0; i < groupCount; i++) {
+            const group = [randomTile];
+            const groupSize = NumberGenerator.randomWithBias(1, groupCount * .5, seed, 0.5);
+            const radius = NumberGenerator.random(1, groupSize * 2, seed);
+            const allTilesInRadius = tiles.filter(tile => {
+                return Math.abs(tile.x - randomTile.x) <= radius && Math.abs(tile.y - randomTile.y) <= radius;
+            });
+            for (let j = 0; j < groupSize; j++) {
+                const randomTileInRadius = allTilesInRadius[Math.floor(Math.random() * allTilesInRadius.length)];
+                if (!group.includes(randomTileInRadius) && randomTileInRadius.type !== "water") {
+                    group.push(randomTileInRadius);
+                }
+            }
+            groups.push(group);
+        }
+        return groups;
     }
 }

@@ -5,10 +5,11 @@ import {Rooms} from "../Definitions/Rooms.mjs";
 import {Maps} from "../Helpers/Maps.mjs";
 
 export class BuildingGenerator {
-    static generateBuilding(educationRate, seed) {
+    static generateBuilding(mapTile, educationRate, seed) {
         const buildingSize = NumberGenerator.randomWithBias(1, 3, seed, 1, 0.5);
         const building = new Building(this.generateBuildingType(educationRate), buildingSize);
         const rooms = this.generateRooms(building, buildingSize, seed);
+        building.setCoordinates({ x: mapTile.x, y: mapTile.y });
         building.addRooms(rooms);
         return building;
     }

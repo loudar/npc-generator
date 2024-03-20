@@ -3,6 +3,7 @@ export class Building {
         this.type = type;
         this.size = size;
         this.rooms = [];
+        this.coordinates = {x: 0, y: 0};
     }
 
     addRoom(room) {
@@ -12,6 +13,11 @@ export class Building {
 
     addRooms(rooms) {
         this.rooms.push(...rooms);
+        return this;
+    }
+
+    setCoordinates(coordinates) {
+        this.coordinates = coordinates;
         return this;
     }
 }

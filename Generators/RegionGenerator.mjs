@@ -1,6 +1,8 @@
 import {SourceLoader} from "./Sources/SourceLoader.mjs";
 import {NumberGenerator} from "./NumberGenerator.mjs";
 import {BuildingGenerator} from "./BuildingGenerator.mjs";
+import {MapGenerator} from "./MapGenerator.mjs";
+import {MapTile} from "../Definitions/MapTile.mjs";
 
 export class RegionGenerator {
     /**
@@ -45,7 +47,7 @@ export class RegionGenerator {
     static generateBuildings(count, population) {
         const buildings = [];
         for (let i = 0; i < count; i++) {
-            buildings.push(BuildingGenerator.generateBuilding(population.educationRate));
+            buildings.push(BuildingGenerator.generateBuilding(new MapTile(0, 0, "valley"), population.educationRate));
         }
         return buildings;
     }
