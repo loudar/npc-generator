@@ -3,6 +3,7 @@ import {Numbers} from "../Helpers/Numbers.mjs";
 import {WordGenerator} from "./WordGenerator.mjs";
 import {Language} from "../Definitions/Language.mjs";
 import {DistributionSolver} from "./DistributionSolver.mjs";
+import fs from "fs";
 
 export class LanguageGenerator {
     static generateLanguage(setProgress, seed) {
@@ -32,14 +33,43 @@ export class LanguageGenerator {
         }
     }
 
+    static getEnglishDictionary(asKeys = true) {
+        const sourceDictionaryFile = "../Resources/dictionary.json";
+        const sourceDict = fs.readFileSync(sourceDictionaryFile, "utf-8");
+        const sourceDictionary = JSON.parse(sourceDict);
+        if (asKeys) {
+            return Object.keys(sourceDictionary);
+        }
+        return sourceDictionary;
+    }
+
     static categorizeWords(words, typeDistribution) {
         const categorizedWords = [];
+        const translations = this.getEnglishDictionary();
         for (const word of words) {
             const type = DistributionSolver.chooseKeyByDistribution(typeDistribution);
             const complexity = DistributionSolver.chooseKeyByDistribution(this.generateComplexityDistribution(type, word.length));
-            categorizedWords.push({word, type, complexity});
+            const translation = this.generateTranslation(words, translations);
+            categorizedWords.push({
+                word,
+                type,
+                complexity,
+                translation
+            });
         }
         return categorizedWords;
+    }
+
+    static generateTranslation(words, translations) {
+        let translation;
+        do {
+            translation = this.randomTranslation(translations);
+        } while (words.some(w => w.translation === translation));
+        return translation;
+    }
+
+    static randomTranslation(translations) {
+        return translations[NumberGenerator.random(0, translations.length, NumberGenerator.getRandomSeed(), true)];
     }
 
     static generateWords(setProgress, characterDistribution, languageComplexity, wordCount, seed) {
