@@ -115,7 +115,7 @@ export class MapGenerator {
         let radius = 1;
         while (radius < coordinateResolution) {
             const radiusStartTime = Date.now();
-            const circleResolution = radius * 8;
+            const circleResolution = radius * 16;
             const circle = [];
             for (let i = 0; i < circleResolution; i++) {
                 const angle = (i / circleResolution) * Math.PI * 2;
@@ -124,7 +124,9 @@ export class MapGenerator {
                 if (x === 0 && y === 0) {
                     continue;
                 }
-                circle.push({x, y});
+                if (!circle.some((coord) => coord.x === x && coord.y === y)) {
+                    circle.push({x, y});
+                }
             }
             // shuffle the list
             circle.sort(() => Math.random() - 0.5);
