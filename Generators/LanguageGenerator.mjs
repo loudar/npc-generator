@@ -24,11 +24,20 @@ export class LanguageGenerator {
         }
     }
 
+    static generateComplexityDistribution(languageComplexity, wordLength) {
+        return {
+            easy: 0.6 + ((1 - languageComplexity) * 0.5) + (wordLength * 0.1),
+            medium: 0.3 + (languageComplexity * 0.4) + (wordLength * 0.2),
+            hard: 0.2 + (languageComplexity * 0.3) + (wordLength * 0.3),
+        }
+    }
+
     static categorizeWords(words, typeDistribution) {
         const categorizedWords = [];
         for (const word of words) {
             const type = DistributionSolver.chooseKeyByDistribution(typeDistribution);
-            categorizedWords.push({word, type});
+            const complexity = DistributionSolver.chooseKeyByDistribution(this.generateComplexityDistribution(type, word.length));
+            categorizedWords.push({word, type, complexity});
         }
         return categorizedWords;
     }

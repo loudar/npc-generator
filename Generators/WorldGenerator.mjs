@@ -3,6 +3,7 @@ import {LandGenerator} from "./LandGenerator.mjs";
 import {LanguageGenerator} from "./LanguageGenerator.mjs";
 import {CultureGenerator} from "./CultureGenerator.mjs";
 import {MapGenerator} from "./MapGenerator.mjs";
+import fs from "fs";
 
 export class WorldGenerator {
     static generateWorld(setProgress, seed) {
@@ -16,6 +17,7 @@ export class WorldGenerator {
             language: LanguageGenerator.generateLanguage(setProgress, seed),
             culture: CultureGenerator.generateCulture(population),
         };
+        fs.writeFileSync("lang.json", JSON.stringify(world.language, null, 2));
         console.log("GEN:WORLD:END");
         return world;
     }
