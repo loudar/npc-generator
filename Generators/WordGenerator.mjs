@@ -19,7 +19,7 @@ export class WordGenerator {
     }
 
     static ensureVowels(word, distribution, seed) {
-        const regex = /([^aeiouyj]{4,})/gi; // Matches sequences of 4 or more consonants
+        const regex = /([^aeiouyj]{2,})/gi; // Matches sequences of 4 or more consonants
         let match = regex.exec(word);
 
         while (match !== null) {

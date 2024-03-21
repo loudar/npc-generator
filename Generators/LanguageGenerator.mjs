@@ -26,9 +26,9 @@ export class LanguageGenerator {
 
     static generateComplexityDistribution(languageComplexity, wordLength) {
         return {
-            easy: 0.6 + ((1 - languageComplexity) * 0.5) + (wordLength * 0.1),
-            medium: 0.3 + (languageComplexity * 0.4) + (wordLength * 0.2),
-            hard: 0.2 + (languageComplexity * 0.3) + (wordLength * 0.3),
+            easy: Math.max(0, 0.6 + ((1 - languageComplexity) * 0.5) - (1.1 ** wordLength) + 1),
+            medium: 0.3 + (languageComplexity * 0.4) + (wordLength * 0.3),
+            hard: (languageComplexity * 0.3) + (1.1 ** wordLength) + 1,
         }
     }
 
@@ -63,6 +63,10 @@ export class LanguageGenerator {
     static generateCharacterDistribution(languageComplexity, seed) {
         const characters = "abcdefghijklmnopqrstuvwxyz";
         const distribution = NumberGenerator.antiExponentialDistribution(characters.length, 2 - languageComplexity, 0.02 + (languageComplexity * 0.1), seed);
+        const vowels = WordGenerator.vowels(true);
+        for (const vowel of vowels) {
+            distribution[vowel] *= 1 + ((1 - languageComplexity));
+        }
         return this.assignDistributionToCharacters(characters, distribution, seed);
     }
 
