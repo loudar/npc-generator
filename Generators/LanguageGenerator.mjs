@@ -4,15 +4,16 @@ import {WordGenerator} from "./WordGenerator.mjs";
 import {Language} from "../Definitions/Language.mjs";
 import {DistributionSolver} from "./DistributionSolver.mjs";
 import fs from "fs";
+import {CLI} from "../Utilities/CLI.mjs";
 
 export class LanguageGenerator {
     static generateLanguage(setProgress, seed) {
         const languageComplexity = NumberGenerator.randomWithBias(0, 1, seed, 0.5, 0.5);
         const characterDistribution = this.generateCharacterDistribution(languageComplexity, seed);
-        const wordCount = 5000 + Math.floor(languageComplexity * 500 * 100);
+        const wordCount = 110000 + Math.floor(languageComplexity * 500 * 100);
         const wordList = this.generateWords(setProgress, characterDistribution, languageComplexity, wordCount, seed);
         const typeDistribution = this.generateTypeDistribution();
-        const words = this.categorizeWords(wordList, typeDistribution);
+        const words = this.categorizeWords(setProgress, wordList, typeDistribution, seed);
         return new Language(characterDistribution, languageComplexity, words);
     }
 
@@ -34,22 +35,31 @@ export class LanguageGenerator {
     }
 
     static getEnglishDictionary(asKeys = true) {
-        const sourceDictionaryFile = "../Resources/dictionary.json";
+        const executionFolder = process.cwd();
+        const sourceDictionaryFile = executionFolder + "/Resources/dictionary.json";
         const sourceDict = fs.readFileSync(sourceDictionaryFile, "utf-8");
         const sourceDictionary = JSON.parse(sourceDict);
+        CLI.writeInfo(`Dictionary loaded: ${Object.keys(sourceDictionary).length} words`);
         if (asKeys) {
             return Object.keys(sourceDictionary);
         }
         return sourceDictionary;
     }
 
-    static categorizeWords(words, typeDistribution) {
+    static categorizeWords(setProgress, words, typeDistribution, seed) {
         const categorizedWords = [];
-        const translations = this.getEnglishDictionary();
+        let translations = this.getEnglishDictionary();
+        let percent = 0, translation;
         for (const word of words) {
-            const type = DistributionSolver.chooseKeyByDistribution(typeDistribution);
-            const complexity = DistributionSolver.chooseKeyByDistribution(this.generateComplexityDistribution(type, word.length));
-            const translation = this.generateTranslation(words, translations);
+            const newPercent = Math.floor(((categorizedWords.length + 1) / words.length) * 100);
+            if (newPercent > percent) {
+                percent = newPercent;
+                CLI.rewrite(`GEN:LANG_CAT_${percent}% (${categorizedWords.length + 1}/${words.length})`);
+                setProgress("language", 50 + (percent / 2));
+            }
+            const type = DistributionSolver.chooseKeyByDistribution(typeDistribution, seed);
+            const complexity = DistributionSolver.chooseKeyByDistribution(this.generateComplexityDistribution(type, word.length), seed);
+            translation = LanguageGenerator.generateTranslation(categorizedWords, translations, seed);
             categorizedWords.push({
                 word,
                 type,
@@ -57,19 +67,24 @@ export class LanguageGenerator {
                 translation
             });
         }
+        CLI.write("");
         return categorizedWords;
     }
 
-    static generateTranslation(words, translations) {
+    static generateTranslation(words, translations, seed) {
+        if (translations.length === 0) {
+            return ""; // Think of a solution here
+        }
         let translation;
         do {
-            translation = this.randomTranslation(translations);
+            translation = this.randomTranslation(translations, seed);
         } while (words.some(w => w.translation === translation));
+        translations = translations.splice(translations.indexOf(translation), 1);
         return translation;
     }
 
-    static randomTranslation(translations) {
-        return translations[NumberGenerator.random(0, translations.length, NumberGenerator.getRandomSeed(), true)];
+    static randomTranslation(translations, seed) {
+        return translations[NumberGenerator.random(0, translations.length, seed, true)];
     }
 
     static generateWords(setProgress, characterDistribution, languageComplexity, wordCount, seed) {
@@ -79,14 +94,15 @@ export class LanguageGenerator {
             const newPercent = Math.floor(((words.length + 1) / wordCount) * 100);
             if (newPercent > percent) {
                 percent = newPercent;
-                console.log(`GEN:LANG_${percent}% (${words.length + 1}/${wordCount})`);
-                setProgress("language", percent);
+                CLI.rewrite(`GEN:LANG_GEN_${percent}% (${words.length + 1}/${wordCount})`);
+                setProgress("language", percent / 2);
             }
             const newWord = WordGenerator.generateWord(characterDistribution, languageComplexity, seed);
             if (!words.includes(newWord)) {
                 words.push(newWord);
             }
         }
+        CLI.write("");
         return words;
     }
 
