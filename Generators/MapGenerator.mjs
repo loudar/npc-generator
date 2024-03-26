@@ -32,12 +32,76 @@ export class MapGenerator {
                 }
             }
         }
+        this.generateHeights(nonNullTiles, seed);
         const buildings = this.generateBuildings(nonNullTiles, coordinateResolution, population, seed);
         return {
             resolution: coordinateResolution,
             tiles: nonNullTiles,
             buildings
         };
+    }
+
+    static generateHeights(tiles, seed) {
+        const tilesToPropagateHeightFrom = [];
+        for (const tile of tiles) {
+            if (tile.type === "water") {
+                const topTile = tiles.find(t => t.x === tile.x && t.y === tile.y - 1);
+                const bottomTile = tiles.find(t => t.x === tile.x && t.y === tile.y + 1);
+                const leftTile = tiles.find(t => t.x === tile.x - 1 && t.y === tile.y);
+                const rightTile = tiles.find(t => t.x === tile.x + 1 && t.y === tile.y);
+                if (topTile && topTile.type !== "water" || bottomTile && bottomTile.type !== "water" || leftTile && leftTile.type !== "water" || rightTile && rightTile.type !== "water") {
+                    tilesToPropagateHeightFrom.push(tile);
+                }
+            }
+        }
+
+        if (tilesToPropagateHeightFrom.length === 0) {
+            CLI.writeWarning("No water tiles adjacent to land found. Picking random tile.");
+            tilesToPropagateHeightFrom.push(tiles[Math.floor(Math.random() * tiles.length)]);
+        }
+
+        const generatedTiles = [];
+        for (const tile of tilesToPropagateHeightFrom) {
+            CLI.rewrite(`Generating heights for tile ${tile.x}, ${tile.y}`);
+            this.generateHeightsForAdjacentTiles(tiles, tile, generatedTiles, seed);
+        }
+        CLI.write("");
+        let iteration = 0;
+        do {
+            iteration++;
+            CLI.rewrite(`Generating heights for tiles (${iteration})`);
+            for (const tile of generatedTiles) {
+                this.generateHeightsForAdjacentTiles(tiles, tile, generatedTiles, seed);
+            }
+        } while (generatedTiles.length < tiles.length);
+        CLI.write("");
+    }
+
+    static generateHeightsForAdjacentTiles(tiles, sourceTile, generatedTiles, seed) {
+        const topTile = tiles.find(t => t.x === sourceTile.x && t.y === sourceTile.y - 1);
+        this.generateTileHeight(topTile, sourceTile.height, generatedTiles, seed);
+        const bottomTile = tiles.find(t => t.x === sourceTile.x && t.y === sourceTile.y + 1);
+        this.generateTileHeight(bottomTile, sourceTile.height, generatedTiles, seed);
+        const leftTile = tiles.find(t => t.x === sourceTile.x - 1 && t.y === sourceTile.y);
+        this.generateTileHeight(leftTile, sourceTile.height, generatedTiles, seed);
+        const rightTile = tiles.find(t => t.x === sourceTile.x + 1 && t.y === sourceTile.y);
+        this.generateTileHeight(rightTile, sourceTile.height, generatedTiles, seed);
+    }
+
+    static generateTileHeight(tile, previousTileHeight, generatedTiles, seed) {
+        if (!tile) {
+            return;
+        }
+        if (generatedTiles.some(t => t.x === tile.x && t.y === tile.y)) {
+            return;
+        }
+        if (tile.type === "water") {
+            tile.setHeight(0);
+            generatedTiles.push(tile);
+            return;
+        }
+        tile.setHeight(previousTileHeight + Math.max(0, NumberGenerator.random(-tile.height / 2, tile.height, seed)));
+        generatedTiles.push(tile);
     }
 
     static initializeGrid(coordinateResolution) {
@@ -59,7 +123,6 @@ export class MapGenerator {
         console.log(`GEN:MAP_0%`);
         let percent = 0, iterations = 0;
         let excludedTerrains = [];
-        const previousTiles = [];
         while (this.gridHasEmptySpace(grid, coordinateResolution)) {
             iterations++;
             const newPercent = Math.floor(this.getPercentFilled(grid, coordinateResolution) * 100);
@@ -68,7 +131,7 @@ export class MapGenerator {
                 console.log(`GEN:MAP_${percent}% (${iterations})`);
                 setProgress("map", percent);
             }
-            grid = this.expandTerrainsOnce(grid, terrains, excludedTerrains, previousTiles, coordinateResolution);
+            grid = this.expandTerrainsOnce(grid, terrains, excludedTerrains, coordinateResolution);
             if (excludedTerrains.length === terrains.length) {
                 setProgress("map", 100);
                 return grid;
@@ -90,24 +153,19 @@ export class MapGenerator {
         return filled / (coordinateResolution * coordinateResolution);
     }
 
-    static expandTerrainsOnce(grid, terrains, excludedTerrains, previousTiles, coordinateResolution) {
+    static expandTerrainsOnce(grid, terrains, excludedTerrains, coordinateResolution) {
         let t = 0;
         for (let terrain of terrains) {
             t++;
             if (excludedTerrains.includes(terrain)) {
                 continue;
             }
-            if (!previousTiles.some((tile) => tile.terrain.type === terrain.type)) {
-                previousTiles.push({ terrain, tile: null });
-            }
-            const previousTile = previousTiles.find((tile) => tile.terrain.type === terrain.type).tile;
             const tileToFill = this.getAnyAdjacentEmptyTileNew(grid, terrain, coordinateResolution);
             if (tileToFill === null) {
                 excludedTerrains.push(terrain);
                 continue;
             }
-            grid[tileToFill.x][tileToFill.y] = this.createTile(terrain, tileToFill, previousTile);
-            previousTiles.find((tile) => tile.terrain.type === terrain.type).tile = grid[tileToFill.x][tileToFill.y];
+            grid[tileToFill.x][tileToFill.y] = this.createTile(terrain, tileToFill);
         }
         return grid;
     }
@@ -204,18 +262,12 @@ export class MapGenerator {
         return false;
     }
 
-    static createTile(terrain, coordinates, previousTile = null){
+    static createTile(terrain, coordinates){
         const mapTile = new MapTile(coordinates.x, coordinates.y, terrain.type);
         mapTile.setColor(this.getTerrainColor(terrain.type));
         mapTile.setSize(1);
         mapTile.setTerrainId(terrain.id);
-        const scalingFactor = .01;
-        const expScalingFactor = scalingFactor * scalingFactor;
-        if (previousTile !== null) {
-            mapTile.setHeight(previousTile.height - NumberGenerator.random(-terrain.height * expScalingFactor, terrain.height * scalingFactor, undefined, false));
-        } else {
-            mapTile.setHeight(terrain.height);
-        }
+        mapTile.setHeight(terrain.height);
         return mapTile;
     }
 
