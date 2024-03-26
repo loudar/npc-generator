@@ -259,19 +259,29 @@ export class MapGenerator {
             const randomTile = tiles[Math.floor(Math.random() * tiles.length)];
             const group = [randomTile];
             const groupSize = NumberGenerator.randomWithBias(1, groupCount * .5, seed, 0.5);
-            const radius = NumberGenerator.random(1, groupSize * 2, seed);
-            const allTilesInRadius = tiles.filter(tile => {
-                return Math.abs(tile.x - randomTile.x) <= radius && Math.abs(tile.y - randomTile.y) <= radius;
-            });
+            let radius = NumberGenerator.random(1, groupSize * 2, seed);
+            let allTilesInRadius = this.getTilesInRadius(tiles, randomTile, radius);
             for (let j = 0; j < groupSize; j++) {
-                let randomTileInRadius;
+                let randomTileInRadius, checkedIndexes = [];
                 do {
-                    randomTileInRadius = allTilesInRadius[Math.floor(Math.random() * allTilesInRadius.length)];
+                    const index = Math.floor(Math.random() * allTilesInRadius.length);
+                    randomTileInRadius = allTilesInRadius[index];
+                    checkedIndexes.push(index);
+                    if (checkedIndexes.length === allTilesInRadius.length) {
+                        radius++;
+                        allTilesInRadius = this.getTilesInRadius(tiles, randomTile, radius);
+                    }
                 } while (randomTileInRadius.type === "water" || groups.some(g => g.some(t => t.x === randomTileInRadius.x && t.y === randomTileInRadius.y)));
                 group.push(randomTileInRadius);
             }
             groups.push(group);
         }
         return groups;
+    }
+
+    static getTilesInRadius(tiles, randomTile, radius) {
+        return tiles.filter(tile => {
+            return Math.abs(tile.x - randomTile.x) <= radius && Math.abs(tile.y - randomTile.y) <= radius;
+        });
     }
 }

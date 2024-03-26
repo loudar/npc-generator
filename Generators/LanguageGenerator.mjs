@@ -55,7 +55,9 @@ export class LanguageGenerator {
             if (newPercent > percent) {
                 percent = newPercent;
                 CLI.rewrite(`GEN:LANG_CAT_${percent}% (${categorizedWords.length + 1}/${words.length})`);
-                setProgress("language", 50 + (percent / 2));
+                if (percent % 2 === 0) {
+                    setProgress("language", 50 + (percent / 2));
+                }
             }
             const type = DistributionSolver.chooseKeyByDistribution(typeDistribution, seed);
             const complexity = DistributionSolver.chooseKeyByDistribution(this.generateComplexityDistribution(type, word.length), seed);
@@ -95,7 +97,9 @@ export class LanguageGenerator {
             if (newPercent > percent) {
                 percent = newPercent;
                 CLI.rewrite(`GEN:LANG_GEN_${percent}% (${words.length + 1}/${wordCount})`);
-                setProgress("language", percent / 2);
+                if (percent % 2 === 0) {
+                    setProgress("language", percent / 2);
+                }
             }
             const newWord = WordGenerator.generateWord(characterDistribution, languageComplexity, seed);
             if (!words.includes(newWord)) {
