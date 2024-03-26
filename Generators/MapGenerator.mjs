@@ -2,6 +2,7 @@ import {MapTile} from "../Definitions/MapTile.mjs";
 import {Config} from "../Config.mjs";
 import {BuildingGenerator} from "./BuildingGenerator.mjs";
 import {NumberGenerator} from "./NumberGenerator.mjs";
+import {CLI} from "../Utilities/CLI.mjs";
 
 export class MapGenerator {
     static colorMap = {
@@ -240,6 +241,10 @@ export class MapGenerator {
 
         for (const group of tileGroups) {
             for (const tile of group) {
+                if (buildings.some(building => building.coordinates.x === tile.x && building.coordinates.y === tile.y)) {
+                    CLI.writeWarning(`Building already exists at ${tile.x}, ${tile.y}`);
+                    continue;
+                }
                 const building = BuildingGenerator.generateBuilding(tile, population.educationRate, seed);
                 buildings.push(building);
             }
@@ -248,10 +253,10 @@ export class MapGenerator {
     }
 
     static generateTileGroups(tiles, resolution, seed) {
-        const randomTile = tiles[Math.floor(Math.random() * tiles.length)];
         const groups = [];
         const groupCount = NumberGenerator.randomWithBias(1, resolution * .25, seed, 0.5);
         for (let i = 0; i < groupCount; i++) {
+            const randomTile = tiles[Math.floor(Math.random() * tiles.length)];
             const group = [randomTile];
             const groupSize = NumberGenerator.randomWithBias(1, groupCount * .5, seed, 0.5);
             const radius = NumberGenerator.random(1, groupSize * 2, seed);
@@ -259,10 +264,11 @@ export class MapGenerator {
                 return Math.abs(tile.x - randomTile.x) <= radius && Math.abs(tile.y - randomTile.y) <= radius;
             });
             for (let j = 0; j < groupSize; j++) {
-                const randomTileInRadius = allTilesInRadius[Math.floor(Math.random() * allTilesInRadius.length)];
-                if (!group.includes(randomTileInRadius) && randomTileInRadius.type !== "water") {
-                    group.push(randomTileInRadius);
-                }
+                let randomTileInRadius;
+                do {
+                    randomTileInRadius = allTilesInRadius[Math.floor(Math.random() * allTilesInRadius.length)];
+                } while (randomTileInRadius.type === "water" || groups.some(g => g.some(t => t.x === randomTileInRadius.x && t.y === randomTileInRadius.y)));
+                group.push(randomTileInRadius);
             }
             groups.push(group);
         }

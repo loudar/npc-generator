@@ -10,7 +10,7 @@ export class LanguageGenerator {
     static generateLanguage(setProgress, seed) {
         const languageComplexity = NumberGenerator.randomWithBias(0, 1, seed, 0.5, 0.5);
         const characterDistribution = this.generateCharacterDistribution(languageComplexity, seed);
-        const wordCount = 110000 + Math.floor(languageComplexity * 500 * 100);
+        const wordCount = 105000 + Math.floor(languageComplexity * 500 * 100);
         const wordList = this.generateWords(setProgress, characterDistribution, languageComplexity, wordCount, seed);
         const typeDistribution = this.generateTypeDistribution();
         const words = this.categorizeWords(setProgress, wordList, typeDistribution, seed);
